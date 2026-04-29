@@ -12,11 +12,12 @@ import {
   Users,
   Coffee,
   Info,
-  Layers
+  Layers,
+  Zap
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { WORKSHOP_SCHEDULE, SCENARIOS, ROTATION_DATA } from './constants';
+import { WORKSHOP_SCHEDULE, SCENARIOS, ROTATION_DATA, FACILITATOR_GUIDE } from './constants';
 import { Scenario } from './types';
 
 // Utility for tailwind classes
@@ -25,7 +26,7 @@ function cn(...inputs: ClassValue[]) {
 }
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'schedule' | 'rotation' | 'scenarios' | 'tips'>('schedule');
+  const [activeTab, setActiveTab] = useState<'schedule' | 'rotation' | 'scenarios' | 'tips' | 'facilitator'>('schedule');
   const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
 
   return (
@@ -65,7 +66,7 @@ export default function App() {
             </div>
           </div>
           <nav className="hidden md:flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
-            {(['schedule', 'rotation', 'scenarios', 'tips'] as const).map((tab) => (
+            {(['schedule', 'rotation', 'facilitator', 'scenarios', 'tips'] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -76,7 +77,7 @@ export default function App() {
                     : "text-slate-600 hover:text-slate-900"
                 )}
               >
-                {tab === 'schedule' ? '課程表' : tab === 'rotation' ? '分組演練' : tab === 'scenarios' ? '角色指引' : '演導技巧'}
+                {tab === 'schedule' ? '課程表' : tab === 'rotation' ? '分組演練' : tab === 'facilitator' ? '引導指引' : tab === 'scenarios' ? '角色指引' : '演導技巧'}
               </button>
             ))}
           </nav>
@@ -191,6 +192,55 @@ export default function App() {
                     </div>
                   </div>
                 ))}
+              </motion.div>
+            )}
+
+            {activeTab === 'facilitator' && (
+              <motion.div
+                key="facilitator"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-6"
+              >
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-bold flex items-center gap-2">
+                    <Zap className="text-amber-500" /> 引導師操作指引
+                  </h2>
+                </div>
+
+                <div className="space-y-6">
+                  {FACILITATOR_GUIDE[0].steps.map((step, idx) => (
+                    <div key={idx} className="relative pl-8">
+                       <div className="absolute left-0 top-0 bottom-0 w-px bg-slate-200" />
+                       <div className="absolute left-[-4px] top-1 w-2 h-2 rounded-full bg-cathay-green shadow-[0_0_8px_rgba(0,129,60,0.5)]" />
+                       
+                       <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+                         <div className="flex items-center justify-between mb-4">
+                           <h3 className="text-lg font-bold text-slate-800">{step.label}</h3>
+                           <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2 py-1 rounded-md">{step.duration}</span>
+                         </div>
+                         <ul className="space-y-2">
+                           {step.items.map((item, iIdx) => (
+                             <li key={iIdx} className="flex items-start gap-2 text-sm text-slate-600 leading-relaxed">
+                               <CheckCircle2 size={14} className="text-cathay-green mt-0.5 shrink-0" />
+                               {item}
+                             </li>
+                           ))}
+                         </ul>
+                       </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6">
+                  <h4 className="font-bold text-amber-800 mb-2 flex items-center gap-2">
+                    <Info size={18} /> 引導師心法小提醒
+                  </h4>
+                  <p className="text-sm text-amber-700 italic">
+                    引導階段的核心在於『深挖』教師的觀察與『連結』SR的演出。若發現回饋過於表面，請適時介入引導，並嚴格管控時間。
+                  </p>
+                </div>
               </motion.div>
             )}
 
@@ -355,7 +405,7 @@ export default function App() {
 
       {/* Mobile Nav */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 md:hidden flex justify-around py-3 px-4 shadow-2xl z-40">
-        {(['schedule', 'rotation', 'scenarios', 'tips'] as const).map((tab) => (
+        {(['schedule', 'rotation', 'facilitator', 'scenarios', 'tips'] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -366,10 +416,12 @@ export default function App() {
           >
             {tab === 'schedule' ? <Calendar size={20} /> : 
              tab === 'rotation' ? <Layers size={20} /> :
+             tab === 'facilitator' ? <Zap size={20} /> :
              tab === 'scenarios' ? <Users size={20} /> : <AlertCircle size={20} />}
             <span className="text-[10px] font-bold">
               {tab === 'schedule' ? '課程表' : 
                tab === 'rotation' ? '分組' :
+               tab === 'facilitator' ? '引導' :
                tab === 'scenarios' ? '情境' : '演導技巧'}
             </span>
           </button>

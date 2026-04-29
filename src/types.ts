@@ -24,6 +24,19 @@ export interface Assignment {
   group: string;
 }
 
+export interface FacilitatorStep {
+  label: string;
+  duration: string;
+  items: string[];
+}
+
+export interface FacilitatorScenario {
+  id: number;
+  title: string;
+  steps: FacilitatorStep[];
+  tips?: string[];
+}
+
 export interface RotationSession {
   timeRange: string;
   assignments: Assignment[];
