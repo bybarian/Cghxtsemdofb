@@ -206,7 +206,7 @@ export default function App() {
                         <tbody className="divide-y divide-slate-50">
                           {session.assignments.map((asgn, aIdx) => (
                             <tr key={aIdx} className="hover:bg-cathay-light/30 transition-colors animate-in fade-in slide-in-from-left-2 duration-300" style={{ animationDelay: `${aIdx * 50}ms` }}>
-                              <td className="px-6 py-4 font-black text-slate-800 text-lg whitespace-nowrap">{asgn.room}</td>
+                              <td className="px-6 py-4 font-black text-slate-800 text-sm whitespace-nowrap">{asgn.room}</td>
                               <td className="px-6 py-4">
                                 <span className={cn(
                                   "px-3 py-1.5 rounded-md text-[13px] font-black tracking-tight flex items-center gap-2 w-fit",
@@ -216,8 +216,8 @@ export default function App() {
                                   {asgn.scenarioType}
                                 </span>
                               </td>
-                              <td className="px-6 py-4 text-slate-600 font-medium whitespace-nowrap">{asgn.facilitator}</td>
-                              <td className="px-6 py-4 text-slate-600 font-bold whitespace-nowrap">{asgn.sr}</td>
+                              <td className="px-6 py-4 text-slate-800 font-black text-sm whitespace-nowrap">{asgn.facilitator}</td>
+                              <td className="px-6 py-4 text-slate-800 font-black text-sm whitespace-nowrap">{asgn.sr}</td>
                               <td className="px-6 py-4 text-center">
                                 <span className="bg-slate-900 text-white font-mono text-[11px] font-bold px-2 py-1 rounded shadow-sm">
                                   {asgn.group}
@@ -250,10 +250,26 @@ export default function App() {
                       <Zap size={20} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-black text-amber-900">每場次內含 2 次練習回圈</h4>
-                      <p className="text-[11px] text-amber-700 font-medium">同一個 Session，讓老師對標準住院醫師連續練習兩個回饋。</p>
+                      <h4 className="text-sm font-black text-amber-900">總共 4 場分組演練場次</h4>
+                      <p className="text-[11px] text-amber-700 font-medium">每 Session 內含 2 次練習回圈，請掌握時間節奏。</p>
                     </div>
                   </div>
+                </div>
+
+                {/* Overall Timeline */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {[
+                    { label: "場次一", time: "14:40-15:20", color: "bg-blue-500" },
+                    { label: "場次二", time: "15:20-16:00", color: "bg-indigo-500" },
+                    { label: "場次三", time: "16:10-16:50", color: "bg-purple-500" },
+                    { label: "場次四", time: "16:50-17:30", color: "bg-emerald-500" }
+                  ].map((s, i) => (
+                    <div key={i} className="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm relative overflow-hidden group">
+                      <div className={cn("absolute top-0 left-0 w-1 h-full", s.color)} />
+                      <div className="text-[10px] font-black text-slate-400 uppercase mb-1">{s.label}</div>
+                      <div className="text-sm font-black text-slate-800">{s.time}</div>
+                    </div>
+                  ))}
                 </div>
 
                 {/* Feedback Loop Diagram */}

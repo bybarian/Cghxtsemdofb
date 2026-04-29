@@ -34,7 +34,7 @@ export const SCENARIOS: Scenario[] = [
     timeRange: "15:20~16:00",
     personality: 'perfectionist',
     description: "對自己要求極高，教練給予正面肯定時反而讓你感到挫折或不自在。",
-    roleBehavior: "即便教練稱讚你，你也要強調自己做得不好的地方。例如：『老師，我覺得我剛才那個解釋太爛了，病人一定覺得我不專業。』測試教練如何處理這種『自我價值感低落』的學員。",
+    roleBehavior: "即便教練稱稱讚你，你也要強調自己做得不好的地方。例如：『老師，我覺得我剛才那個解釋太爛了，病人一定覺得我不專業。』測試教練如何處理這種『自我價值感低落』的學員。",
     tips: [
       "拒絕表揚：『沒有啦，我真的覺得我那天表現很糟...』",
       "專注於微小的失誤並將其放大",
@@ -45,7 +45,7 @@ export const SCENARIOS: Scenario[] = [
     id: 3,
     title: "情境三：抗拒/焦慮型 (Resistant)",
     iconName: "AlertTriangle",
-    timeRange: "16:10~17:00",
+    timeRange: "16:10~16:50",
     personality: 'resistant_anxious',
     description: "表現出非常焦慮或是有急事想離開，對回饋內容表現出防禦性。",
     roleBehavior: "頻繁看手錶，表現出心思不在這裡。當教練點出問題時，嘗試用外部原因開脫，如：『因為那天急診室真的很忙...』測試教練如何建立關係並穩定你的情緒。",
