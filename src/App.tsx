@@ -31,15 +31,37 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
       {/* Header */}
-      <header className="sticky top-0 z-30 bg-white border-b border-slate-200 px-4 py-4 shadow-sm">
+      <header className="sticky top-0 z-30 bg-white border-b border-slate-200 px-4 py-3 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="bg-cathay-green p-2 rounded-lg text-white">
-              <Users size={20} />
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 pr-4 border-r border-slate-100">
+              <img 
+                src="https://www.cgh.org.tw/tw/content/images/logo.png" 
+                alt="Cathay Logo" 
+                className="h-8 md:h-10 object-contain"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.parentElement?.querySelector('.fallback-cgh')?.classList.remove('hidden');
+                }}
+              />
+              <div className="fallback-cgh hidden w-8 h-8 bg-cathay-green rounded-full flex items-center justify-center text-white font-bold text-xs">CGH</div>
+              
+              <img 
+                src="https://www.sem.org.tw/template/default/images/logo.png" 
+                alt="TSEM Logo" 
+                className="h-8 md:h-10 object-contain"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.parentElement?.querySelector('.fallback-tsem')?.classList.remove('hidden');
+                }}
+              />
+              <div className="fallback-tsem hidden w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center text-white font-bold text-[10px]">TSEM</div>
             </div>
             <div>
-              <h1 className="text-lg font-bold tracking-tight text-slate-800">國泰綜合醫院 SR 數位手冊</h1>
-              <p className="text-[10px] text-cathay-green font-bold tracking-widest border-l-2 border-cathay-green pl-2 ml-1">數位科技輔助臨床教練工作坊</p>
+              <h1 className="text-sm md:text-lg font-black tracking-tight text-slate-800 leading-tight">國泰綜合醫院 SR 數位手冊</h1>
+              <p className="text-[9px] md:text-[10px] text-cathay-green font-bold tracking-widest border-l-2 border-cathay-green pl-2 ml-1 uppercase">
+                Taiwan Society of Emergency Medicine (TSEM)
+              </p>
             </div>
           </div>
           <nav className="hidden md:flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
@@ -428,7 +450,10 @@ export default function App() {
 
       {/* Footer */}
       <footer className="mt-12 mb-8 py-8 border-t border-slate-200 text-center">
-        <p className="text-xs text-slate-400 font-medium tracking-widest font-sans">
+        <p className="text-xs text-slate-500 font-bold tracking-widest font-sans mb-1">
+          社團法人台灣急診醫學會 & 國泰綜合醫院
+        </p>
+        <p className="text-[10px] text-slate-400 font-medium tracking-widest font-sans">
           國泰綜合醫院教學部數位科技暨網路資源中心
         </p>
       </footer>
