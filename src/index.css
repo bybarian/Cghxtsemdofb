@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cathay-green: #00813c;
+  --color-cathay-green-hover: #006b32;
+  --color-cathay-light: #e6f3ec;
+}
