@@ -1,6 +1,7 @@
 export interface Scenario {
   id: number;
   title: string;
+  iconName?: string;
   timeRange: string;
   description: string;
   roleBehavior: string;
@@ -27,6 +28,7 @@ export interface Assignment {
 export interface FacilitatorStep {
   label: string;
   duration: string;
+  iconName?: string;
   items: string[];
 }
 

@@ -1,4 +1,4 @@
-import { Scenario, ScheduleItem } from './types';
+import { Scenario, ScheduleItem, RotationSession } from './types';
 
 export const WORKSHOP_SCHEDULE: ScheduleItem[] = [
   { time: "13:00-13:05", minutes: 5, topic: "長官與貴賓致詞", location: "33會議室" },
@@ -16,6 +16,7 @@ export const SCENARIOS: Scenario[] = [
   {
     id: 1,
     title: "情境一：表面認同型 (Yes-Man)",
+    iconName: "CheckCircle2",
     timeRange: "14:40~15:20",
     personality: 'agreeable_vague',
     description: "不斷點頭認同，但教練無法得知你的真實想法或具體學習痛點。",
@@ -29,6 +30,7 @@ export const SCENARIOS: Scenario[] = [
   {
     id: 2,
     title: "情境二：完美主義型 (Perfectionist)",
+    iconName: "Target",
     timeRange: "15:20~16:00",
     personality: 'perfectionist',
     description: "對自己要求極高，教練給予正面肯定時反而讓你感到挫折或不自在。",
@@ -42,6 +44,7 @@ export const SCENARIOS: Scenario[] = [
   {
     id: 3,
     title: "情境三：抗拒/焦慮型 (Resistant)",
+    iconName: "AlertTriangle",
     timeRange: "16:10~17:00",
     personality: 'resistant_anxious',
     description: "表現出非常焦慮或是有急事想離開，對回饋內容表現出防禦性。",
@@ -60,7 +63,7 @@ export const ROTATION_DATA: RotationSession[] = [
     assignments: [
       { room: "診間一", scenarioType: "病史詢問", facilitator: "陳信佑", sr: "王昱仁", group: "A" },
       { room: "診間二", scenarioType: "病情解釋", facilitator: "郭宇正", sr: "闕嘉儀", group: "B" },
-      { room: "診間三", scenarioType: "病史詢問", facilitator: "黃昭硯", sr: "施雯文", group: "C" },
+      { room: "診間三", scenarioType: "病史詢問", facilitator: "鍾睿元", sr: "施雯文", group: "C" },
       { room: "診間四", scenarioType: "病情解釋", facilitator: "陳玉龍", sr: "劉品佳", group: "D" },
       { room: "診間五", scenarioType: "病史詢問", facilitator: "劉政亨", sr: "李佩庭", group: "E" },
       { room: "診間六", scenarioType: "病情解釋", facilitator: "吳人傑", sr: "蔡如庭", group: "F" },
@@ -72,7 +75,7 @@ export const ROTATION_DATA: RotationSession[] = [
       { room: "診間一", scenarioType: "病情解釋", facilitator: "郭宇正", sr: "闕嘉儀", group: "A" },
       { room: "診間二", scenarioType: "病史詢問", facilitator: "陳信佑", sr: "王昱仁", group: "B" },
       { room: "診間三", scenarioType: "病情解釋", facilitator: "陳玉龍", sr: "劉品佳", group: "C" },
-      { room: "診間四", scenarioType: "病史詢問", facilitator: "黃昭硯", sr: "施雯文", group: "D" },
+      { room: "診間四", scenarioType: "病史詢問", facilitator: "鍾睿元", sr: "施雯文", group: "D" },
       { room: "診間五", scenarioType: "病情解釋", facilitator: "吳人傑", sr: "蔡如庭", group: "E" },
       { room: "診間六", scenarioType: "病史詢問", facilitator: "劉政亨", sr: "李佩庭", group: "F" },
     ]
@@ -87,6 +90,7 @@ export const FACILITATOR_GUIDE = [
       {
         label: "PDT 複習",
         duration: "7 分鐘",
+        iconName: "RefreshCcw",
         items: [
           "向學員問好並自我介紹",
           "詢問誰將擔任『教師』角色",
@@ -95,16 +99,19 @@ export const FACILITATOR_GUIDE = [
         ]
       },
       {
-        label: "觀察演練 (360VR)",
+        label: "觀察演練 (影片)",
         duration: "10 分鐘",
+        iconName: "PlayCircle",
         items: [
-          "播放 360VR 影片（病史詢問/病情解釋）",
-          "引導學員專注觀察住院醫師的特定行為"
+          "觀看練習影片 (影片 A & 影片 B)",
+          "引導學員專注觀察住院醫師的特定行為",
+          "注意：每個 Session 需進行兩次連續的回饋練習 (Round 1 A -> Round 2 B)"
         ]
       },
       {
         label: "回饋準備",
         duration: "8 分鐘",
+        iconName: "ClipboardList",
         items: [
           "信賴等級評分：讓參與者舉手詢問個別評分 1-5",
           "進行討論：詢問教師做得好的與可改進之處，引導差異化回饋",
@@ -114,6 +121,7 @@ export const FACILITATOR_GUIDE = [
       {
         label: "進行回饋",
         duration: "7 分鐘",
+        iconName: "Mic2",
         items: [
           "提醒其餘參與人被視為『看不見』",
           "提醒教師隨時可喊『暫停』尋求幫助",
@@ -123,6 +131,7 @@ export const FACILITATOR_GUIDE = [
       {
         label: "回饋總結",
         duration: "8 分鐘",
+        iconName: "Flag",
         items: [
           "詢問教師感受與希望得到的同儕回饋",
           "主持人模仿 ADAPT 回饋模型進行引導",
@@ -130,5 +139,21 @@ export const FACILITATOR_GUIDE = [
         ]
       }
     ]
+  }
+];
+
+export const SR_PROGRESSION = [
+  { stage: "第一階段: 正常 (Normal)", description: "演出基本的住院醫師水準，以便教練觀察。" },
+  { 
+    stage: "第二階段: 表面認同 (Yes-man)", 
+    description: "轉為不斷點頭客套。切換點：當教練請學員進行『回顧 (Review)』時，立即恢復正常。" 
+  },
+  { 
+    stage: "第三階段: 完美主義 (Perfectionist)", 
+    description: "轉為極度自我要求與焦慮。切換點：在獲得教練具體『鼓勵』後，展現改進意願。" 
+  },
+  { 
+    stage: "第四階段: 抗拒/焦慮 (Resistant)", 
+    description: "展現防禦性、一直看手錶。切換點：當教練主動詢問『是否有事情發生？』後，恢復正常討論。" 
   }
 ];
