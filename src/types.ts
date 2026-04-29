@@ -15,3 +15,16 @@ export interface ScheduleItem {
   location: string;
   isBreak?: boolean;
 }
+
+export interface Assignment {
+  room: string;
+  scenarioType: string;
+  facilitator: string;
+  sr: string;
+  group: string;
+}
+
+export interface RotationSession {
+  timeRange: string;
+  assignments: Assignment[];
+}

@@ -53,3 +53,28 @@ export const SCENARIOS: Scenario[] = [
     ]
   }
 ];
+
+export const ROTATION_DATA: RotationSession[] = [
+  {
+    timeRange: "14:40-16:00 (Session 1)",
+    assignments: [
+      { room: "診間一", scenarioType: "病史詢問", facilitator: "陳信佑", sr: "王昱仁", group: "A" },
+      { room: "診間二", scenarioType: "病情解釋", facilitator: "郭宇正", sr: "闕嘉儀", group: "B" },
+      { room: "診間三", scenarioType: "病史詢問", facilitator: "黃昭硯", sr: "施雯文", group: "C" },
+      { room: "診間四", scenarioType: "病情解釋", facilitator: "陳玉龍", sr: "劉品佳", group: "D" },
+      { room: "診間五", scenarioType: "病史詢問", facilitator: "劉政亨", sr: "李佩庭", group: "E" },
+      { room: "診間六", scenarioType: "病情解釋", facilitator: "吳人傑", sr: "蔡如庭", group: "F" },
+    ]
+  },
+  {
+    timeRange: "16:10-17:30 (Session 2)",
+    assignments: [
+      { room: "診間一", scenarioType: "病情解釋", facilitator: "郭宇正", sr: "闕嘉儀", group: "A" },
+      { room: "診間二", scenarioType: "病史詢問", facilitator: "陳信佑", sr: "王昱仁", group: "B" },
+      { room: "診間三", scenarioType: "病情解釋", facilitator: "陳玉龍", sr: "劉品佳", group: "C" },
+      { room: "診間四", scenarioType: "病史詢問", facilitator: "黃昭硯", sr: "施雯文", group: "D" },
+      { room: "診間五", scenarioType: "病情解釋", facilitator: "吳人傑", sr: "蔡如庭", group: "E" },
+      { room: "診間六", scenarioType: "病史詢問", facilitator: "劉政亨", sr: "李佩庭", group: "F" },
+    ]
+  }
+];

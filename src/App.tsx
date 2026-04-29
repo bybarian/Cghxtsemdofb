@@ -11,11 +11,12 @@ import {
   Settings, 
   Users,
   Coffee,
-  Info
+  Info,
+  Layers
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { WORKSHOP_SCHEDULE, SCENARIOS } from './constants';
+import { WORKSHOP_SCHEDULE, SCENARIOS, ROTATION_DATA } from './constants';
 import { Scenario } from './types';
 
 // Utility for tailwind classes
@@ -24,7 +25,7 @@ function cn(...inputs: ClassValue[]) {
 }
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'schedule' | 'scenarios' | 'tips'>('schedule');
+  const [activeTab, setActiveTab] = useState<'schedule' | 'rotation' | 'scenarios' | 'tips'>('schedule');
   const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
 
   return (
@@ -42,7 +43,7 @@ export default function App() {
             </div>
           </div>
           <nav className="hidden md:flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
-            {(['schedule', 'scenarios', 'tips'] as const).map((tab) => (
+            {(['schedule', 'rotation', 'scenarios', 'tips'] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -53,7 +54,7 @@ export default function App() {
                     : "text-slate-600 hover:text-slate-900"
                 )}
               >
-                {tab === 'schedule' ? '課程表' : tab === 'scenarios' ? '角色指引' : '演導技巧'}
+                {tab === 'schedule' ? '課程表' : tab === 'rotation' ? '分組演練' : tab === 'scenarios' ? '角色指引' : '演導技巧'}
               </button>
             ))}
           </nav>
@@ -61,103 +62,164 @@ export default function App() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <AnimatePresence mode="wait">
-          {activeTab === 'schedule' && (
-            <motion.div
-              key="schedule"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="space-y-6"
-            >
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold flex items-center gap-2">
-                  <Calendar className="text-cathay-green" /> 工作坊流程紀錄
-                </h2>
-                <div className="text-xs bg-cathay-light text-cathay-green font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-cathay-green/20">
-                  CATHAY GENERAL HOSPITAL
+      <main className="max-w-full mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto">
+          <AnimatePresence mode="wait">
+            {activeTab === 'schedule' && (
+              <motion.div
+                key="schedule"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-6"
+              >
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-bold flex items-center gap-2">
+                    <Calendar className="text-cathay-green" /> 工作坊流程紀錄
+                  </h2>
+                  <div className="text-xs bg-cathay-light text-cathay-green font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-cathay-green/20">
+                    CATHAY GENERAL HOSPITAL
+                  </div>
                 </div>
-              </div>
 
-              <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-                {WORKSHOP_SCHEDULE.map((item, index) => (
-                  <div 
-                    key={index}
-                    className={cn(
-                      "flex items-stretch border-b border-slate-100 last:border-0",
-                      item.isBreak ? "bg-slate-50/50" : "bg-white"
-                    )}
-                  >
-                    <div className="w-24 md:w-32 px-4 py-4 border-r border-slate-100 flex flex-col justify-center items-center text-center bg-slate-50/30">
-                      <span className="text-sm font-bold text-slate-700">{item.time}</span>
-                      <span className="text-[10px] text-slate-400 font-mono">{item.minutes}min</span>
-                    </div>
-                    <div className="flex-1 px-5 py-4 flex flex-col justify-center">
-                      <div className="flex items-center gap-2">
-                        {item.isBreak ? <Coffee size={14} className="text-amber-500" /> : <BookOpen size={14} className="text-cathay-green" />}
-                        <h3 className={cn("text-base font-semibold text-slate-800", item.isBreak && "text-slate-500 font-normal")}>
-                          {item.topic}
-                        </h3>
+                <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                  {WORKSHOP_SCHEDULE.map((item, index) => (
+                    <div 
+                      key={index}
+                      className={cn(
+                        "flex items-stretch border-b border-slate-100 last:border-0",
+                        item.isBreak ? "bg-slate-50/50" : "bg-white"
+                      )}
+                    >
+                      <div className="w-24 md:w-32 px-4 py-4 border-r border-slate-100 flex flex-col justify-center items-center text-center bg-slate-50/30">
+                        <span className="text-sm font-bold text-slate-700">{item.time}</span>
+                        <span className="text-[10px] text-slate-400 font-mono">{item.minutes}min</span>
                       </div>
-                      <p className="text-xs text-slate-400 mt-1 flex items-center gap-1">
-                        <Settings size={10} /> {item.location}
-                      </p>
+                      <div className="flex-1 px-5 py-4 flex flex-col justify-center">
+                        <div className="flex items-center gap-2">
+                          {item.isBreak ? <Coffee size={14} className="text-amber-500" /> : <BookOpen size={14} className="text-cathay-green" />}
+                          <h3 className={cn("text-base font-semibold text-slate-800", item.isBreak && "text-slate-500 font-normal")}>
+                            {item.topic}
+                          </h3>
+                        </div>
+                        <p className="text-xs text-slate-400 mt-1 flex items-center gap-1">
+                          <Settings size={10} /> {item.location}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {activeTab === 'rotation' && (
+              <motion.div
+                key="rotation"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-8"
+              >
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-bold flex items-center gap-2">
+                    <Layers className="text-cathay-green" /> 分組演練配表
+                  </h2>
+                </div>
+
+                {ROTATION_DATA.map((session, sIdx) => (
+                  <div key={sIdx} className="space-y-3">
+                    <div className="flex items-center gap-2 px-1">
+                      <div className="w-1.5 h-5 bg-cathay-green rounded-full shadow-sm shadow-cathay-green/20" />
+                      <h3 className="font-bold text-slate-800 text-lg">{session.timeRange}</h3>
+                    </div>
+                    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm overflow-x-auto">
+                      <table className="w-full text-sm text-left border-collapse">
+                        <thead className="bg-slate-50/80 backdrop-blur-sm text-slate-500 font-black uppercase text-[10px] tracking-widest border-b border-slate-100">
+                          <tr>
+                            <th className="px-6 py-4 whitespace-nowrap">地點</th>
+                            <th className="px-6 py-4 whitespace-nowrap">情境演練</th>
+                            <th className="px-6 py-4 whitespace-nowrap">引導師</th>
+                            <th className="px-6 py-4 whitespace-nowrap">SR</th>
+                            <th className="px-6 py-4 text-center whitespace-nowrap">組別</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-50">
+                          {session.assignments.map((asgn, aIdx) => (
+                            <tr key={aIdx} className="hover:bg-cathay-light/30 transition-colors animate-in fade-in slide-in-from-left-2 duration-300" style={{ animationDelay: `${aIdx * 50}ms` }}>
+                              <td className="px-6 py-4 font-black text-slate-700 whitespace-nowrap">{asgn.room}</td>
+                              <td className="px-6 py-4">
+                                <span className={cn(
+                                  "px-2.5 py-1 rounded-md text-[11px] font-black tracking-tight",
+                                  asgn.scenarioType === '病史詢問' ? "bg-blue-100 text-blue-700 border border-blue-200/50" : "bg-amber-100 text-amber-700 border border-amber-200/50"
+                                )}>
+                                  {asgn.scenarioType}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4 text-slate-600 font-medium whitespace-nowrap">{asgn.facilitator}</td>
+                              <td className="px-6 py-4 text-slate-600 font-bold whitespace-nowrap">{asgn.sr}</td>
+                              <td className="px-6 py-4 text-center">
+                                <span className="bg-slate-900 text-white font-mono text-[11px] font-bold px-2 py-1 rounded shadow-sm">
+                                  {asgn.group}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 ))}
-              </div>
-            </motion.div>
-          )}
+              </motion.div>
+            )}
 
-          {activeTab === 'scenarios' && (
-            <motion.div
-              key="scenarios"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="space-y-6"
-            >
-              <h2 className="text-2xl font-bold flex items-center gap-2">
-                <Users className="text-cathay-green" /> SR 角色劇本指引
-              </h2>
+            {activeTab === 'scenarios' && (
+              <motion.div
+                key="scenarios"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-6"
+              >
+                <h2 className="text-2xl font-bold flex items-center gap-2">
+                  <Users className="text-cathay-green" /> SR 角色劇本指引
+                </h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {SCENARIOS.map((scenario) => (
-                  <button
-                    key={scenario.id}
-                    onClick={() => setSelectedScenario(scenario)}
-                    className="p-5 bg-white border border-slate-200 rounded-2xl text-left hover:border-cathay-green hover:shadow-md transition-all group relative overflow-hidden"
-                  >
-                    <div className={cn(
-                      "absolute top-0 right-0 px-3 py-1 rounded-bl-xl text-[10px] font-bold uppercase tracking-widest text-white shadow-sm",
-                      scenario.personality === 'agreeable_vague' ? "bg-green-600" :
-                      scenario.personality === 'perfectionist' ? "bg-purple-600" :
-                      "bg-rose-600"
-                    )}>
-                      {scenario.personality === 'agreeable_vague' ? '表面認同型' : 
-                       scenario.personality === 'perfectionist' ? '完美主義型' : '抗拒/焦慮型'}
-                    </div>
-                    
-                    <h3 className="font-bold text-lg mb-1 group-hover:text-cathay-green transition-colors">
-                      {scenario.title}
-                    </h3>
-                    <div className="flex items-center gap-2 text-xs text-slate-400 mb-3 font-mono">
-                      <Clock size={12} /> {scenario.timeRange}
-                    </div>
-                    <p className="text-sm text-slate-600 line-clamp-2">
-                      {scenario.description}
-                    </p>
-                    <div className="mt-4 flex items-center gap-1 text-cathay-green text-xs font-bold uppercase tracking-tighter">
-                      查看詳細演法 <ChevronRight size={14} />
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          )}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {SCENARIOS.map((scenario) => (
+                    <button
+                      key={scenario.id}
+                      onClick={() => setSelectedScenario(scenario)}
+                      className="p-5 bg-white border border-slate-200 rounded-2xl text-left hover:border-cathay-green hover:shadow-md transition-all group relative overflow-hidden"
+                    >
+                      <div className={cn(
+                        "absolute top-0 right-0 px-3 py-1 rounded-bl-xl text-[10px] font-bold uppercase tracking-widest text-white shadow-sm",
+                        scenario.personality === 'agreeable_vague' ? "bg-green-600" :
+                        scenario.personality === 'perfectionist' ? "bg-purple-600" :
+                        "bg-rose-600"
+                      )}>
+                        {scenario.personality === 'agreeable_vague' ? '表面認同型' : 
+                         scenario.personality === 'perfectionist' ? '完美主義型' : '抗拒/焦慮型'}
+                      </div>
+                      
+                      <h3 className="font-bold text-lg mb-1 group-hover:text-cathay-green transition-colors">
+                        {scenario.title}
+                      </h3>
+                      <div className="flex items-center gap-2 text-xs text-slate-400 mb-3 font-mono">
+                        <Clock size={12} /> {scenario.timeRange}
+                      </div>
+                      <p className="text-sm text-slate-600 line-clamp-2">
+                        {scenario.description}
+                      </p>
+                      <div className="mt-4 flex items-center gap-1 text-cathay-green text-xs font-bold uppercase tracking-tighter">
+                        查看詳細演法 <ChevronRight size={14} />
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
 
-          {activeTab === 'tips' && (
+            {activeTab === 'tips' && (
             <motion.div
               key="tips"
               initial={{ opacity: 0, y: 10 }}
@@ -266,11 +328,12 @@ export default function App() {
             </motion.div>
           )}
         </AnimatePresence>
-      </main>
+      </div>
+    </main>
 
       {/* Mobile Nav */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 md:hidden flex justify-around py-3 px-4 shadow-2xl z-40">
-        {(['schedule', 'scenarios', 'tips'] as const).map((tab) => (
+        {(['schedule', 'rotation', 'scenarios', 'tips'] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -279,9 +342,13 @@ export default function App() {
               activeTab === tab ? "text-cathay-green" : "text-slate-400"
             )}
           >
-            {tab === 'schedule' ? <Calendar size={20} /> : tab === 'scenarios' ? <Users size={20} /> : <AlertCircle size={20} />}
+            {tab === 'schedule' ? <Calendar size={20} /> : 
+             tab === 'rotation' ? <Layers size={20} /> :
+             tab === 'scenarios' ? <Users size={20} /> : <AlertCircle size={20} />}
             <span className="text-[10px] font-bold">
-              {tab === 'schedule' ? '課程表' : tab === 'scenarios' ? '情境' : '演導技巧'}
+              {tab === 'schedule' ? '課程表' : 
+               tab === 'rotation' ? '分組' :
+               tab === 'scenarios' ? '情境' : '演導技巧'}
             </span>
           </button>
         ))}
