@@ -257,19 +257,40 @@ export default function App() {
                 </div>
 
                 {/* Overall Timeline */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  {[
-                    { label: "場次一", time: "14:40-15:20", color: "bg-blue-500" },
-                    { label: "場次二", time: "15:20-16:00", color: "bg-indigo-500" },
-                    { label: "場次三", time: "16:10-16:50", color: "bg-purple-500" },
-                    { label: "場次四", time: "16:50-17:30", color: "bg-emerald-500" }
-                  ].map((s, i) => (
-                    <div key={i} className="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm relative overflow-hidden group">
-                      <div className={cn("absolute top-0 left-0 w-1 h-full", s.color)} />
-                      <div className="text-[10px] font-black text-slate-400 uppercase mb-1">{s.label}</div>
-                      <div className="text-sm font-black text-slate-800">{s.time}</div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  {/* Session 1 */}
+                  <div className="bg-slate-50 border border-slate-200 p-1 rounded-2xl flex flex-col gap-1">
+                    <div className="px-4 py-2 text-[10px] font-black text-slate-500 uppercase tracking-widest border-b border-slate-200/50">Session 1</div>
+                    <div className="grid grid-cols-2 gap-1 p-1">
+                      <div className="bg-white p-3 rounded-xl shadow-sm border border-slate-100 relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-blue-500" />
+                        <div className="text-[9px] font-black text-slate-400 uppercase mb-0.5">Round 1</div>
+                        <div className="text-sm font-black text-slate-800">14:40-15:20</div>
+                      </div>
+                      <div className="bg-white p-3 rounded-xl shadow-sm border border-slate-100 relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500" />
+                        <div className="text-[9px] font-black text-slate-400 uppercase mb-0.5">Round 2</div>
+                        <div className="text-sm font-black text-slate-800">15:20-16:00</div>
+                      </div>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Session 2 */}
+                  <div className="bg-slate-50 border border-slate-200 p-1 rounded-2xl flex flex-col gap-1">
+                    <div className="px-4 py-2 text-[10px] font-black text-slate-500 uppercase tracking-widest border-b border-slate-200/50">Session 2</div>
+                    <div className="grid grid-cols-2 gap-1 p-1">
+                      <div className="bg-white p-3 rounded-xl shadow-sm border border-slate-100 relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-purple-500" />
+                        <div className="text-[9px] font-black text-slate-400 uppercase mb-0.5">Round 1</div>
+                        <div className="text-sm font-black text-slate-800">16:10-16:50</div>
+                      </div>
+                      <div className="bg-white p-3 rounded-xl shadow-sm border border-slate-100 relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500" />
+                        <div className="text-[9px] font-black text-slate-400 uppercase mb-0.5">Round 2</div>
+                        <div className="text-sm font-black text-slate-800">16:50-17:30</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Feedback Loop Diagram */}
