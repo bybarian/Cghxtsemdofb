@@ -1,10 +1,10 @@
 import { Scenario, ScheduleItem, RotationSession } from './types';
 
 export const WORKSHOP_SCHEDULE: ScheduleItem[] = [
-  { time: "13:00-13:05", minutes: 5, topic: "長官與貴賓致詞", location: "33會議室" },
-  { time: "13:05-13:35", minutes: 30, topic: "Clinical Coach 在能力導向教育的角色", location: "33會議室" },
-  { time: "13:35-14:05", minutes: 30, topic: "回饋技巧理論架構介紹 (ERCP)", location: "33會議室" },
-  { time: "14:05-14:35", minutes: 30, topic: "回饋技巧實務探討", location: "33會議室" },
+  { time: "13:00-13:05", minutes: 5, topic: "長官與貴賓致詞", location: "33會議室", speaker: "簡志誠院長" },
+  { time: "13:05-13:35", minutes: 30, topic: "Clinical Coach 在能力導向教育的角色", location: "33會議室", speaker: "楊志偉教授" },
+  { time: "13:35-14:05", minutes: 30, topic: "回饋技巧理論架構介紹 (ERCP)", location: "33會議室", speaker: "劉政亨醫師" },
+  { time: "14:05-14:35", minutes: 30, topic: "回饋技巧實務探討", location: "33會議室", speaker: "鍾睿元副主任" },
   { time: "14:35-14:40", minutes: 15, topic: "茶敘", location: "33會議室", isBreak: true },
   { time: "14:40-16:00", minutes: 80, topic: "情境演練 Session 1 (病史詢問 / 病情解釋)", location: "臨床技能中心" },
   { time: "16:00-16:10", minutes: 10, topic: "茶敘", location: "臨床技能中心", isBreak: true },

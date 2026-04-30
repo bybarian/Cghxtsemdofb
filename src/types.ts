@@ -14,6 +14,7 @@ export interface ScheduleItem {
   minutes: number;
   topic: string;
   location: string;
+  speaker?: string;
   isBreak?: boolean;
 }
 

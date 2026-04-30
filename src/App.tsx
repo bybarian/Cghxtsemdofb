@@ -162,9 +162,16 @@ export default function App() {
                             {item.topic}
                           </h3>
                         </div>
-                        <p className="text-xs text-slate-400 mt-1 flex items-center gap-1">
-                          <Settings size={10} /> {item.location}
-                        </p>
+                        <div className="flex items-center gap-4 mt-1">
+                          <p className="text-xs text-slate-400 flex items-center gap-1">
+                            <Settings size={10} /> {item.location}
+                          </p>
+                          {item.speaker && (
+                            <p className="text-xs text-cathay-green font-black flex items-center gap-1">
+                              <UserCircle size={10} /> {item.speaker}
+                            </p>
+                          )}
+                        </div>
                       </div>
                     </div>
                   ))}
