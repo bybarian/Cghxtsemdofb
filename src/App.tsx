@@ -133,6 +133,7 @@ const ProtectedSection = ({
 
 
 function MainAppContent() {
+  console.log('MainAppContent rendering...');
   const [activeTab, setActiveTab] = useState<'schedule' | 'rotation' | 'scenarios' | 'tips' | 'facilitator'>('schedule');
   const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
   const [isPasswordVerified, setIsPasswordVerified] = useState(false);

@@ -7,33 +7,60 @@
     <script>
       window.onerror = function(msg, url, line, col, error) {
         var div = document.createElement('div');
-        div.style.color = 'red';
+        div.style.color = 'white';
         div.style.position = 'fixed';
         div.style.top = '0';
         div.style.left = '0';
         div.style.width = '100%';
-        div.style.backgroundColor = 'white';
+        div.style.backgroundColor = 'red';
         div.style.zIndex = '1000000';
         div.style.padding = '20px';
-        div.style.border = '5px solid red';
-        div.style.fontSize = '14px';
+        div.style.fontSize = '12px';
         div.style.whiteSpace = 'pre-wrap';
         div.style.overflow = 'auto';
         div.style.maxHeight = '100%';
-        div.innerText = 'RUNTIME ERROR DETECTED:\n' + msg + '\nAt: ' + url + ':' + line + ':' + col + '\n' + (error ? error.stack : '');
+        div.innerText = 'JS ERROR: ' + msg + '\n@ ' + url + ':' + line + ':' + col + '\n' + (error ? error.stack : '');
         document.body.appendChild(div);
       };
-      console.log('Error handler initialized');
+      window.onunhandledrejection = function(event) {
+        var div = document.createElement('div');
+        div.style.color = 'white';
+        div.style.position = 'fixed';
+        div.style.bottom = '0';
+        div.style.left = '0';
+        div.style.width = '100%';
+        div.style.backgroundColor = 'purple';
+        div.style.zIndex = '1000000';
+        div.style.padding = '10px';
+        div.style.fontSize = '12px';
+        div.innerText = 'PROMISE REJECTION: ' + event.reason;
+        document.body.appendChild(div);
+      };
+      console.log('Error handler active');
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM Content Loaded');
+        var indicator = document.createElement('div');
+        indicator.id = 'html-loaded-indicator';
+        indicator.style.position = 'fixed';
+        indicator.style.bottom = '0';
+        indicator.style.right = '0';
+        indicator.style.background = 'blue';
+        indicator.style.color = 'white';
+        indicator.style.fontSize = '10px';
+        indicator.style.padding = '2px 5px';
+        indicator.style.zIndex = '1000000';
+        indicator.innerText = 'HTML OK';
+        document.body.appendChild(indicator);
+      });
     </script>
   </head>
   <body>
-    <script>console.log('HTML body script executing');</script>
     <div id="root" class="min-h-screen bg-slate-100 flex items-center justify-center p-4">
-      <div class="text-rose-600 font-black text-2xl animate-bounce">
-        Digital Handbook Booting... [數位手冊啟動中]
+      <div id="loading-msg" class="text-rose-600 font-black text-2xl animate-bounce">
+        Digital Handbook Booting...
       </div>
     </div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="./src/main.tsx"></script>
   </body>
 </html>
 
