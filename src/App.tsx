@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
@@ -82,13 +82,62 @@ function Navigation() {
   );
 }
 
+const ProtectedSection = ({ 
+  children, 
+  isPasswordVerified, 
+  password, 
+  setPassword, 
+  showPasswordError, 
+  handlePasswordSubmit 
+}: { 
+  children: React.ReactNode, 
+  isPasswordVerified: boolean,
+  password: string,
+  setPassword: (val: string) => void,
+  showPasswordError: boolean,
+  handlePasswordSubmit: (e: React.FormEvent) => void
+}) => {
+  if (isPasswordVerified) return <>{children}</>;
+  
+  return (
+    <div className="flex flex-col items-center justify-center py-20 px-6 text-center bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
+      <div className="w-16 h-16 bg-white rounded-full shadow-md flex items-center justify-center mb-6 text-cathay-green">
+        <Lock size={32} />
+      </div>
+      <h3 className="text-xl font-black text-slate-800 mb-2">專業指引內容已鎖定</h3>
+      <p className="text-sm text-slate-500 mb-8 max-w-xs">此部分包含引導師指引與演繹技巧，請輸入授權密碼以查看內容。</p>
+      
+      <form onSubmit={handlePasswordSubmit} className="w-full max-w-sm space-y-4">
+        <div className="relative group">
+          <input 
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="請輸入 5 位數密碼"
+            className="w-full bg-white border-2 border-slate-200 focus:border-cathay-green focus:ring-4 focus:ring-cathay-light/30 rounded-2xl px-6 py-4 outline-none transition-all text-center text-lg font-mono tracking-[0.5em]"
+          />
+          {showPasswordError && (
+            <p className="text-rose-500 text-xs font-bold mt-2 animate-bounce">密碼錯誤，請重新輸入</p>
+          )}
+        </div>
+        <button 
+          type="submit"
+          className="w-full bg-cathay-green text-white font-black py-4 rounded-2xl shadow-lg shadow-cathay-green/20 hover:bg-cathay-green-dark transition-all active:scale-[0.98]"
+        >
+          解鎖指引內容
+        </button>
+      </form>
+    </div>
+  );
+};
+
+
 function MainAppContent() {
   const [activeTab, setActiveTab] = useState<'schedule' | 'rotation' | 'scenarios' | 'tips' | 'facilitator'>('schedule');
   const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
   const [isPasswordVerified, setIsPasswordVerified] = useState(false);
   const [password, setPassword] = useState('');
   const [showPasswordError, setShowPasswordError] = useState(false);
-
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === '00000') {
@@ -97,41 +146,6 @@ function MainAppContent() {
     } else {
       setShowPasswordError(true);
     }
-  };
-
-  const ProtectedSection = ({ children }: { children: React.ReactNode }) => {
-    if (isPasswordVerified) return <>{children}</>;
-    
-    return (
-      <div className="flex flex-col items-center justify-center py-20 px-6 text-center bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
-        <div className="w-16 h-16 bg-white rounded-full shadow-md flex items-center justify-center mb-6 text-cathay-green">
-          <Lock size={32} />
-        </div>
-        <h3 className="text-xl font-black text-slate-800 mb-2">專業指引內容已鎖定</h3>
-        <p className="text-sm text-slate-500 mb-8 max-w-xs">此部分包含引導師指引與演繹技巧，請輸入授權密碼以查看內容。</p>
-        
-        <form onSubmit={handlePasswordSubmit} className="w-full max-w-sm space-y-4">
-          <div className="relative group">
-            <input 
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="請輸入 5 位數密碼"
-              className="w-full bg-white border-2 border-slate-200 focus:border-cathay-green focus:ring-4 focus:ring-cathay-light/30 rounded-2xl px-6 py-4 outline-none transition-all text-center text-lg font-mono tracking-[0.5em]"
-            />
-            {showPasswordError && (
-              <p className="text-rose-500 text-xs font-bold mt-2 animate-bounce">密碼錯誤，請重新輸入</p>
-            )}
-          </div>
-          <button 
-            type="submit"
-            className="w-full bg-cathay-green text-white font-black py-4 rounded-2xl shadow-lg shadow-cathay-green/20 hover:bg-cathay-green-dark transition-all active:scale-[0.98]"
-          >
-            解鎖指引內容
-          </button>
-        </form>
-      </div>
-    );
   };
 
   return (
@@ -429,7 +443,13 @@ function MainAppContent() {
                 exit={{ opacity: 0, y: -10 }}
                 className="space-y-8"
               >
-                <ProtectedSection>
+                <ProtectedSection
+                  isPasswordVerified={isPasswordVerified}
+                  password={password}
+                  setPassword={setPassword}
+                  showPasswordError={showPasswordError}
+                  handlePasswordSubmit={handlePasswordSubmit}
+                >
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <h2 className="text-2xl font-bold flex items-center gap-2">
                       <Layers className="text-cathay-green" /> 引導師帶領流程指南
@@ -633,7 +653,13 @@ function MainAppContent() {
                 exit={{ opacity: 0, y: -10 }}
                 className="space-y-6"
               >
-                <ProtectedSection>
+                <ProtectedSection
+                  isPasswordVerified={isPasswordVerified}
+                  password={password}
+                  setPassword={setPassword}
+                  showPasswordError={showPasswordError}
+                  handlePasswordSubmit={handlePasswordSubmit}
+                >
                   <h2 className="text-2xl font-bold flex items-center gap-2">
                     <Users className="text-cathay-green" /> 標準住院醫師 角色劇本指引
                   </h2>
@@ -693,7 +719,13 @@ function MainAppContent() {
               exit={{ opacity: 0, y: -10 }}
               className="space-y-8"
             >
-              <ProtectedSection>
+              <ProtectedSection
+                isPasswordVerified={isPasswordVerified}
+                password={password}
+                setPassword={setPassword}
+                showPasswordError={showPasswordError}
+                handlePasswordSubmit={handlePasswordSubmit}
+              >
                 <div className="flex items-center justify-between">
                   <h2 className="text-2xl font-bold flex items-center gap-2">
                     <AlertCircle className="text-rose-500" /> 專業學員類型演出小技巧
