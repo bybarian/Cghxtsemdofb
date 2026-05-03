@@ -157,12 +157,15 @@ function MainAppContent() {
             <div className="flex items-center gap-2 pr-4 border-r border-slate-100">
               <div className="flex items-center gap-1">
                 <img 
-                  src="./logo_cgh.png" 
+                  src={`${import.meta.env.BASE_URL}logo_cgh.png`} 
                   alt="CGH Logo" 
                   className="h-6 w-auto object-contain"
                   onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement?.querySelector('.fallback')?.classList.remove('hidden');
+                    const target = e.currentTarget;
+                    if (!target.src.includes('ui-avatars')) {
+                       target.style.display = 'none';
+                       target.parentElement?.querySelector('.fallback')?.classList.remove('hidden');
+                    }
                   }}
                 />
                 <div className="fallback hidden w-5 h-5 bg-cathay-light rounded-full flex items-center justify-center text-cathay-green font-bold text-[8px]">C</div>
@@ -173,12 +176,15 @@ function MainAppContent() {
 
               <div className="flex items-center gap-1">
                 <img 
-                  src="./logo_tsem.png" 
+                  src={`${import.meta.env.BASE_URL}logo_tsem.png`} 
                   alt="TSEM Logo" 
                   className="h-6 w-auto object-contain"
                   onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement?.querySelector('.fallback')?.classList.remove('hidden');
+                    const target = e.currentTarget;
+                    if (!target.src.includes('ui-avatars')) {
+                       target.style.display = 'none';
+                       target.parentElement?.querySelector('.fallback')?.classList.remove('hidden');
+                    }
                   }}
                 />
                 <div className="fallback hidden w-5 h-5 bg-slate-800 rounded-full flex items-center justify-center text-white font-bold text-[8px]">T</div>
@@ -278,12 +284,14 @@ function MainAppContent() {
                                 <div className="flex -space-x-4">
                                   {item.speaker.split('/').map((s, idx) => {
                                     const name = s.trim();
-                                    let imgSrc = "";
-                                    if (name.includes('簡')) imgSrc = "./speaker_jian.png";
-                                    else if (name.includes('楊')) imgSrc = "./speaker_yang.png";
-                                    else if (name.includes('劉')) imgSrc = "./speaker_liu.png";
-                                    else if (name.includes('鍾')) imgSrc = "./speaker_zhong.png";
-                                    else if (name.includes('郭')) imgSrc = "./speaker_kuo.png";
+                                    let imgPath = "";
+                                    if (name.includes('簡')) imgPath = "speaker_jian.png";
+                                    else if (name.includes('楊')) imgPath = "speaker_yang.png";
+                                    else if (name.includes('劉')) imgPath = "speaker_liu.png";
+                                    else if (name.includes('鍾')) imgPath = "speaker_zhong.png";
+                                    else if (name.includes('郭')) imgPath = "speaker_kuo.png";
+                                    
+                                    const imgSrc = imgPath ? `${import.meta.env.BASE_URL}${imgPath}` : "";
                                     
                                     return (
                                       <div key={idx} className="w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden bg-slate-100 border-2 border-white ring-1 ring-slate-200 shadow-md">
@@ -292,7 +300,10 @@ function MainAppContent() {
                                           alt={name}
                                           className="w-full h-full object-cover"
                                           onError={(e) => {
-                                            e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name.charAt(0))}&background=00813c&color=fff`;
+                                            const target = e.currentTarget;
+                                            if (!target.src.includes('ui-avatars')) {
+                                              target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name.charAt(0))}&background=00813c&color=fff`;
+                                            }
                                           }}
                                         />
                                       </div>
