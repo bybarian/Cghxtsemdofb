@@ -162,12 +162,12 @@ export function WorkshopTimer() {
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-3 bg-white/10 p-2 rounded-2xl ring-1 ring-white/20">
               <div className="flex items-center gap-1">
-                <img src={`${import.meta.env.BASE_URL}logo_cgh.png`} alt="CGH" className="h-8 md:h-10 w-auto object-contain" onError={e => e.currentTarget.style.display='none'} />
+                <img src="/logo_cgh.png" alt="CGH" className="h-8 md:h-10 w-auto object-contain" onError={e => e.currentTarget.style.display='none'} />
                 <div className="bg-white/20 px-2 py-0.5 rounded text-[10px] font-black">CGH</div>
               </div>
               <div className="w-px h-6 bg-white/20" />
               <div className="flex items-center gap-1">
-                <img src={`${import.meta.env.BASE_URL}logo_tsem.png`} alt="TSEM" className="h-8 md:h-10 w-auto object-contain" onError={e => e.currentTarget.style.display='none'} />
+                <img src="/logo_tsem.png" alt="TSEM" className="h-8 md:h-10 w-auto object-contain" onError={e => e.currentTarget.style.display='none'} />
                 <div className="bg-slate-800/40 px-2 py-0.5 rounded text-[10px] font-black">TSEM</div>
               </div>
             </div>
@@ -320,7 +320,7 @@ export function WorkshopTimer() {
            {/* Workshop Info */}
            <div className="hidden lg:flex bg-white p-6 rounded-[2rem] border border-slate-100 items-start gap-4 shadow-sm group">
               <div className="bg-white p-1 rounded-3xl shadow-[0_10px_20px_-5px_rgba(0,0,0,0.1)] transition-transform group-hover:scale-110 overflow-hidden w-16 h-16 flex items-center justify-center border border-slate-100">
-                 <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Digital Center Logo" className="w-full h-full object-contain" referrerPolicy="no-referrer" />
+                 <img src="/logo.png" alt="Digital Center Logo" className="w-full h-full object-contain" referrerPolicy="no-referrer" />
               </div>
               <div>
                  <h3 className="text-slate-400 text-[11px] font-black uppercase tracking-widest mb-1.5">ORGANIZATION</h3>
