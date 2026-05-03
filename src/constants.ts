@@ -1,23 +1,26 @@
 import { Scenario, ScheduleItem, RotationSession } from './types';
 
 export const WORKSHOP_SCHEDULE: ScheduleItem[] = [
-  { time: "13:00-13:05", minutes: 5, topic: "長官與貴賓致詞", location: "33會議室", speaker: "簡志誠院長" },
-  { time: "13:05-13:35", minutes: 30, topic: "Clinical Coach 在能力導向教育的角色", location: "33會議室", speaker: "楊志偉教授" },
-  { time: "13:35-14:05", minutes: 30, topic: "回饋技巧理論架構介紹 (ERCP)", location: "33會議室", speaker: "劉政亨醫師" },
-  { time: "14:05-14:35", minutes: 30, topic: "回饋技巧實務探討", location: "33會議室", speaker: "鍾睿元副主任" },
-  { time: "14:35-14:40", minutes: 15, topic: "茶敘", location: "33會議室", isBreak: true },
-  { time: "14:40-16:00", minutes: 80, topic: "情境演練 Session 1 (病史詢問 / 病情解釋)", location: "臨床技能中心" },
-  { time: "16:00-16:10", minutes: 10, topic: "茶敘", location: "臨床技能中心", isBreak: true },
-  { time: "16:10-17:30", minutes: 80, topic: "情境演練 Session 2 (病史詢問 / 病情解釋)", location: "臨床技能中心" },
-  { time: "17:30-17:50", minutes: 20, topic: "總結 (Closing Remarks)", location: "臨床技能中心" }
+  { time: "13:00-13:05", minutes: 5, topic: "長官與貴賓致詞", location: "國泰人壽大樓 33 會議室", speaker: "簡志誠院長" },
+  { time: "13:05-13:35", minutes: 30, topic: "Clinical Coach 在能力導向教育的角色", location: "國泰人壽大樓 33 會議室", speaker: "楊志偉教授" },
+  { time: "13:35-14:05", minutes: 30, topic: "回饋技巧理論架構介紹 (ERCP)", location: "國泰人壽大樓 33 會議室", speaker: "劉政亨醫師" },
+  { time: "14:05-14:20", minutes: 15, topic: "回饋技巧實務探討", location: "國泰人壽大樓 33 會議室", speaker: "鍾睿元副主任 / 郭宇正主任" },
+  { time: "14:20-14:55", minutes: 35, topic: "回饋演練 Session 1 (Round 1)", location: "國泰人壽大樓 33 會議室" },
+  { time: "14:55-15:00", minutes: 5, topic: "換場休息", location: "國泰人壽大樓 33 會議室", isBreak: true },
+  { time: "15:00-15:25", minutes: 25, topic: "回饋演練 Session 1 (Round 2)", location: "國泰人壽大樓 33 會議室" },
+  { time: "15:25-15:45", minutes: 20, topic: "咖啡茶敘", location: "國泰人壽大樓 33 會議室", isBreak: true },
+  { time: "15:45-16:20", minutes: 35, topic: "回饋演練 Session 2 (Round 1)", location: "國泰人壽大樓 33 會議室" },
+  { time: "16:20-16:25", minutes: 5, topic: "換場休息", location: "國泰人壽大樓 33 會議室", isBreak: true },
+  { time: "16:25-16:50", minutes: 25, topic: "回饋演練 Session 2 (Round 2)", location: "國泰人壽大樓 33 會議室" },
+  { time: "16:50-17:10", minutes: 20, topic: "總結 (Closing Remarks)", location: "國泰人壽大樓 33 會議室" }
 ];
 
 export const SCENARIOS: Scenario[] = [
   {
     id: 1,
-    title: "情境一：表面認同型 (Yes-Man)",
+    title: "案例一：表面認同型 (Yes-Man)",
     iconName: "CheckCircle2",
-    timeRange: "14:40~15:20",
+    timeRange: "14:20~14:55",
     personality: 'agreeable_vague',
     description: "不斷點頭認同，但教練無法得知你的真實想法或具體學習痛點。",
     roleBehavior: "當教練問你『覺不覺得剛才哪裡可以更好？』時，你總是回答『老師說得對，我都覺得很好，我會改進』。你的目標是讓教練練習如何『深挖』學員的內心想法。",
@@ -29,9 +32,9 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: 2,
-    title: "情境二：完美主義型 (Perfectionist)",
+    title: "案例二：完美主義型 (Perfectionist)",
     iconName: "Target",
-    timeRange: "15:20~16:00",
+    timeRange: "15:00~15:25",
     personality: 'perfectionist',
     description: "對自己要求極高，教練給予正面肯定時反而讓你感到挫折或不自在。",
     roleBehavior: "即便教練稱稱讚你，你也要強調自己做得不好的地方。例如：『老師，我覺得我剛才那個解釋太爛了，病人一定覺得我不專業。』測試教練如何處理這種『自我價值感低落』的學員。",
@@ -43,9 +46,9 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: 3,
-    title: "情境三：抗拒/焦慮型 (Resistant)",
+    title: "案例三：抗拒/焦慮型 (Resistant)",
     iconName: "AlertTriangle",
-    timeRange: "16:10~16:50",
+    timeRange: "15:45~16:20",
     personality: 'resistant_anxious',
     description: "表現出非常焦慮或是有急事想離開，對回饋內容表現出防禦性。",
     roleBehavior: "頻繁看手錶，表現出心思不在這裡。當教練點出問題時，嘗試用外部原因開脫，如：『因為那天急診室真的很忙...』測試教練如何建立關係並穩定你的情緒。",
@@ -59,7 +62,7 @@ export const SCENARIOS: Scenario[] = [
 
 export const ROTATION_DATA: RotationSession[] = [
   {
-    timeRange: "14:40-16:00 (Session 1)",
+    timeRange: "14:20-15:25 (Session 1)",
     assignments: [
       { room: "診間一", scenarioType: "病史詢問", facilitator: "陳信佑", sr: "王昱仁", group: "A" },
       { room: "診間二", scenarioType: "病情解釋", facilitator: "郭宇正", sr: "闕嘉儀", group: "B" },
@@ -70,7 +73,7 @@ export const ROTATION_DATA: RotationSession[] = [
     ]
   },
   {
-    timeRange: "16:10-17:30 (Session 2)",
+    timeRange: "15:45-16:50 (Session 2)",
     assignments: [
       { room: "診間一", scenarioType: "病情解釋", facilitator: "郭宇正", sr: "闕嘉儀", group: "A" },
       { room: "診間二", scenarioType: "病史詢問", facilitator: "陳信佑", sr: "王昱仁", group: "B" },
@@ -85,57 +88,57 @@ export const ROTATION_DATA: RotationSession[] = [
 export const FACILITATOR_GUIDE = [
   {
     id: 1,
-    title: "情境演練流程 (標準流程-40分鐘)",
+    title: "回饋演練流程 (標準流程-35~40分鐘)",
     steps: [
       {
         label: "PDT 複習",
         duration: "7 分鐘",
         iconName: "RefreshCcw",
         items: [
-          "向學員問好並自我介紹",
-          "詢問誰將擔任『教師』角色",
-          "建構 PDT：請學員在紙上寫下對住院醫師的期望表現與關鍵技能",
-          "分發參考框架供團隊修訂清單"
+          "引言 (2分)：問好、自我介紹、問名字與臨床角色、詢問誰擔任『教師』",
+          "建構 PDT (5分)：請學員在空白紙寫下住院醫師應有的表現與關鍵行為特徵",
+          "修訂清單：團隊創建清單後，分發參考框架供團隊修訂",
+          "註：因為一組會練習同一個主題兩次，因此 Round 2 不用重新建立 PDT"
         ]
       },
       {
-        label: "觀察演練 (影片)",
-        duration: "10 分鐘",
+        label: "播放影片 (Observation)",
+        duration: "5 分鐘",
         iconName: "PlayCircle",
         items: [
-          "觀看練習影片 (影片 A & 影片 B)",
-          "引導學員專注觀察住院醫師的特定行為",
-          "注意：每個 Session 需進行兩次連續的回饋練習 (Round 1 A -> Round 2 B)"
+          "觀看練習影片 (病史詢問 A/B ; 病情解釋 A/B)",
+          "引導學員專注觀察住院醫師的特定行為特徵",
+          "準備後續的回饋討論亮點"
         ]
       },
       {
-        label: "回饋準備",
-        duration: "8 分鐘",
+        label: "回饋準備 (Prep)",
+        duration: "6-8 分鐘",
         iconName: "ClipboardList",
         items: [
-          "信賴等級評分：讓參與者舉手詢問個別評分 1-5",
-          "進行討論：詢問教師做得好的與可改進之處，引導差異化回饋",
-          "最後提問：確認教師是否準備好，或對同事有其他問題"
+          "信賴等級評分：在小組討論前，舉手詢問個別評分 1-5 (2~3分)",
+          "進行討論 (4~5分)：先問教師做得好的/不同的做法，再問其他人。討論回饋分流、限制或優先順序",
+          "檢查推斷：強調推斷並邀請討論。確認教師準備狀況與計劃 (ADAPT/ERCP)"
         ]
       },
       {
-        label: "進行回饋",
+        label: "進行回饋 (Execution)",
         duration: "7 分鐘",
         iconName: "Mic2",
         items: [
+          "標準住院醫師進入診間 (提醒除教師及醫師外，其餘參與人均視為『看不見』)",
           "提醒其餘參與人被視為『看不見』",
-          "提醒教師隨時可喊『暫停』尋求幫助",
-          "作為協調者隨時準備喊停以維持時間"
+          "教師可隨時喊『暫停』尋求幫助，或由協調者喊停以維持時間"
         ]
       },
       {
-        label: "回饋總結",
-        duration: "8 分鐘",
+        label: "回饋總結 (Summary)",
+        duration: "7-8 分鐘",
         iconName: "Flag",
         items: [
-          "詢問教師感受與希望得到的同儕回饋",
-          "主持人模仿 ADAPT 回饋模型進行引導",
-          "確保住院醫師帶著具體的改變行動計劃離開"
+          "回饋評估：問教師過程感受，詢問希望得到的同儕回饋 (模仿 ADAPT/ERCP 模型)",
+          "引導對話：邀請觀察者進行建設性引導。確認醫師帶著行動計畫離開",
+          "住院醫師回饋：詢問住院醫師對本次過程的回饋"
         ]
       }
     ]
