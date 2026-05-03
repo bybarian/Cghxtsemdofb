@@ -4,9 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2026 數位科技輔助臨床教練工作坊</title>
+    <script>
+      window.onerror = function(msg, url, line, col, error) {
+        var div = document.createElement('div');
+        div.style.color = 'red';
+        div.style.position = 'fixed';
+        div.style.top = '0';
+        div.style.left = '0';
+        div.style.width = '100%';
+        div.style.backgroundColor = 'white';
+        div.style.zIndex = '1000000';
+        div.style.padding = '20px';
+        div.style.border = '5px solid red';
+        div.style.fontSize = '14px';
+        div.style.whiteSpace = 'pre-wrap';
+        div.style.overflow = 'auto';
+        div.style.maxHeight = '100%';
+        div.innerText = 'RUNTIME ERROR DETECTED:\n' + msg + '\nAt: ' + url + ':' + line + ':' + col + '\n' + (error ? error.stack : '');
+        document.body.appendChild(div);
+      };
+      console.log('Error handler initialized');
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <script>console.log('HTML body script executing');</script>
+    <div id="root" class="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+      <div class="text-rose-600 font-black text-2xl animate-bounce">
+        Digital Handbook Booting... [數位手冊啟動中]
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

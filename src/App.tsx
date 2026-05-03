@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   Calendar, 
   Clock, 
@@ -985,10 +985,11 @@ function MainAppContent() {
 }
 
 export default function App() {
+  console.log('App mounting...');
   return (
     <Router>
       {/* Mounting Check */}
-      <div className="fixed top-2 right-2 z-[999] opacity-0 pointer-events-none">Mounted</div>
+      <div className="fixed top-4 right-4 z-[9999] bg-red-500 text-white px-2 py-1 text-[10px] font-bold rounded shadow-xl">Handback App v1.0.1</div>
       <Navigation />
       <Routes>
         <Route path="/" element={<MainAppContent />} />
