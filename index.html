@@ -1,35 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Handbook</title>
-    <script>
-      window.onerror = function(msg, url, line, col, error) {
-        var div = document.createElement('div');
-        div.style.cssText = "position:fixed;top:0;left:0;width:100%;background:red;color:white;z-index:999999;padding:20px;font-size:12px;white-space:pre-wrap;";
-        div.innerText = 'RUNTIME ERROR: ' + msg + '\n' + (error ? error.stack : '');
-        document.body.appendChild(div);
-      };
-      document.addEventListener('DOMContentLoaded', () => {
-        console.log('HTML Loaded');
-        setTimeout(() => {
-          if (document.getElementById('root').innerHTML.includes('BOOTING')) {
-            var div = document.createElement('div');
-            div.style.cssText = "position:fixed;bottom:0;left:0;width:100%;background:orange;color:black;z-index:999999;padding:20px;font-weight:bold;";
-            div.innerText = 'STUCK DETECTED: main.tsx did not replace content.';
-            document.body.appendChild(div);
-          }
-        }, 3000);
-      });
-    </script>
-</head>
-<body class="bg-slate-50">
-    <div id="root">
-        <div style="height:100vh;display:flex;align-items:center;justify-content:center;font-family:sans-serif;color:#e11d48;font-weight:900;font-size:2rem;">
-            BOOTING...
-        </div>
-    </div>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Handbook | 數位手冊</title>
+  </head>
+  <body>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-</body>
+  </body>
 </html>
