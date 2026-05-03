@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
 import { clsx, type ClassValue } from 'clsx';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
