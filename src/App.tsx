@@ -245,7 +245,7 @@ function MainAppContent() {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <div className="w-1.5 h-6 bg-cathay-green rounded-full shadow-sm" />
-                      <h3 className="text-xl font-bold text-slate-800">上半場：講題與理論探討</h3>
+                      <h3 className="text-xl font-bold text-slate-800">上半場：理論回顧與重點提示</h3>
                     </div>
                     <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
                       <div className="grid grid-cols-[100px_1fr_1fr] md:grid-cols-[140px_1fr_1fr] bg-slate-50 border-b border-slate-100 font-black text-[10px] md:text-xs uppercase tracking-widest text-slate-400">
