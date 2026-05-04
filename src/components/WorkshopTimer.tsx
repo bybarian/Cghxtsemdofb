@@ -135,6 +135,13 @@ export function WorkshopTimer() {
     setIsRunning(true);
   };
 
+  const handleStartNow = () => {
+    setStartTime(Date.now());
+    setIsRunning(true);
+    const now = new Date();
+    setCustomStartTime(`${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`);
+  };
+
   const formatCountdown = (ms: number) => {
     const totalSecs = Math.max(0, Math.floor(ms / 1000));
     const mins = Math.floor(totalSecs / 60);
@@ -223,18 +230,18 @@ export function WorkshopTimer() {
                   </div>
 
                   <h2 className={cn(
-                    "text-7xl md:text-9xl font-black mb-8 tracking-tighter leading-none px-4",
+                    "text-5xl md:text-7xl font-black mb-8 tracking-tighter leading-tight px-4",
                     timeline.current.type === 'break' ? "text-amber-600" : "text-slate-900"
                   )}>
                     {timeline.current.label}
                   </h2>
                   
                   <div className="relative">
-                    <div className="text-[14rem] md:text-[20rem] font-mono font-black leading-none text-[#ff8a00] drop-shadow-[0_20px_40px_rgba(255,138,0,0.3)] tabular-nums">
+                    <div className="text-[10rem] md:text-[14rem] font-mono font-black leading-none text-[#ff8a00] drop-shadow-[0_20px_40px_rgba(255,138,0,0.3)] tabular-nums">
                       {formatCountdown(timeline.totalInStage - timeline.elapsedInStage)}
                     </div>
-                    <div className="mt-8 text-slate-400 font-black uppercase tracking-[0.3em] text-xl">
-                       剩 餘 時 間 <span className="text-slate-300 font-normal">MOVE TIME</span>
+                    <div className="mt-8 text-slate-400 font-black uppercase tracking-[0.2em] text-lg">
+                       剩 餘 時 間 <span className="text-slate-300 font-normal">REMAINING TIME</span>
                     </div>
                   </div>
 
@@ -261,15 +268,35 @@ export function WorkshopTimer() {
                 </div>
               </motion.div>
             ) : (
-              <div className="text-center bg-white p-24 rounded-[4rem] shadow-xl border border-slate-100">
-                 <h2 className="text-5xl font-black text-cathay-green mb-8">
-                   {now < (startTime || 0) ? "活動準備中" : "今日課程已圓滿結束"}
+              <div className="text-center bg-white p-12 md:p-20 rounded-[4rem] shadow-xl border border-slate-100 flex flex-col items-center max-w-4xl w-full">
+                 <div className="bg-cathay-light p-8 rounded-full mb-8">
+                   <Clock size={64} className="text-cathay-green animate-pulse" />
+                 </div>
+                 <h2 className="text-4xl font-black text-slate-800 mb-4 whitespace-nowrap">
+                   {now < (startTime || 0) ? "活動準備中" : "等待手冊計時啟動"}
                  </h2>
-                 {now < (startTime || 0) && (
-                   <div className="flex flex-col items-center">
-                     <span className="text-slate-400 font-black tracking-widest uppercase mb-4">距離開始還有</span>
-                     <div className="text-[12rem] font-mono font-black text-slate-800 tabular-nums">
-                        {startTime ? formatCountdown(startTime - now) : "00:00"}
+                 <p className="text-slate-400 font-bold mb-12">請點擊下方按鈕直接開始流程，或由管理室操作。</p>
+                 
+                 <div className="flex flex-col sm:flex-row gap-6 w-full justify-center">
+                   <button 
+                     onClick={handleStartNow}
+                     className="bg-cathay-green hover:bg-cathay-green-hover text-white px-10 py-6 rounded-3xl text-2xl font-black shadow-2xl shadow-cathay-green/20 flex items-center justify-center gap-3 active:scale-95 transition-all w-full sm:w-auto"
+                   >
+                     <Play size={32} /> 立即一鍵啟動
+                   </button>
+                   <button 
+                     onClick={() => setIsImmersive(false)}
+                     className="bg-slate-100 hover:bg-slate-200 text-slate-600 px-10 py-6 rounded-3xl text-2xl font-black flex items-center justify-center gap-3 active:scale-95 transition-all w-full sm:w-auto"
+                   >
+                     <Settings2 size={32} /> 返回設定模式
+                   </button>
+                 </div>
+
+                 {startTime && now < startTime && (
+                   <div className="mt-12 pt-12 border-t border-slate-100 w-full">
+                     <span className="text-slate-400 font-black tracking-widest uppercase mb-4 block">預計開始倒數</span>
+                     <div className="text-6xl font-mono font-black text-slate-800 tabular-nums">
+                        {formatCountdown(startTime - now)}
                      </div>
                    </div>
                  )}
@@ -404,13 +431,25 @@ export function WorkshopTimer() {
                       className="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-cathay-green/50 transition-all"
                      />
                    </div>
-                   <button 
-                    onClick={handleStart}
-                    className="w-full bg-cathay-green hover:bg-cathay-green-hover text-white font-black rounded-xl px-4 py-3 text-sm transition-all shadow-lg active:scale-[0.98] flex items-center justify-center gap-2"
-                   >
-                     {isRunning ? <StopCircle size={18} /> : <Play size={18} />}
-                     {isRunning ? "重新重置跑程" : "啟動自動排程"}
-                   </button>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button 
+                       onClick={handleStart}
+                       className={cn(
+                         "flex-1 bg-slate-700 hover:bg-slate-600 text-white font-black rounded-xl px-4 py-3 text-sm transition-all shadow-lg active:scale-[0.98] flex items-center justify-center gap-2",
+                         isRunning && "bg-rose-500 hover:bg-rose-600 shadow-rose-500/20"
+                       )}
+                      >
+                        {isRunning ? <StopCircle size={18} /> : <Play size={18} />}
+                        {isRunning ? "重置" : "排程啟動"}
+                      </button>
+                      <button 
+                       onClick={handleStartNow}
+                       disabled={isRunning}
+                       className="flex-1 bg-cathay-green hover:bg-cathay-green-hover disabled:opacity-50 disabled:cursor-not-allowed text-white font-black rounded-xl px-4 py-3 text-sm transition-all shadow-lg active:scale-[0.98] flex items-center justify-center gap-2"
+                      >
+                        <TimerIcon size={18} /> 一鍵開始
+                      </button>
+                    </div>
                 </div>
              </div>
 
