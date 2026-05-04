@@ -991,7 +991,7 @@ export default function App() {
   return (
     <Router>
       {/* Mounting Check */}
-      <div className="fixed top-4 right-4 z-[9999] bg-slate-800 text-white px-2 py-1 text-[10px] font-bold rounded shadow-xl">Handback App v2.0</div>
+      <div className="fixed top-4 right-4 z-[9999] bg-cathay-green text-white px-2 py-1 text-[10px] font-bold rounded shadow-xl">Handbook 2.0</div>
       <Navigation />
       <Routes>
         <Route path="/" element={<MainAppContent />} />
