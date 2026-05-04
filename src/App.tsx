@@ -190,9 +190,9 @@ function MainAppContent() {
               </div>
             </div>
             <div>
-              <h1 className="text-sm md:text-lg font-black tracking-tight text-slate-800 leading-tight">臨床教練工作坊標準住院醫師/引導師 數位手冊</h1>
+              <h1 className="text-sm md:text-lg font-black tracking-tight text-slate-800 leading-tight">臨床教練工作坊標準住院醫師/引導師 數位手冊 2.0</h1>
               <p className="text-[7px] md:text-[9px] text-cathay-green font-bold tracking-tight border-l-2 border-cathay-green pl-2 ml-1 uppercase leading-none mt-0.5">
-                Digital Handbook for Standardized Residents & Facilitators in Clinical Coaching Workshop<br/>
+                Digital Handbook for Standardized Residents & Facilitators 2.0 In Clinical Coaching Workshop<br/>
                 <span className="text-[6px] md:text-[8px] opacity-60">Cathay General Hospital x Taiwan Society of Emergency Medicine (TSEM)</span>
               </p>
             </div>

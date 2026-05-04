@@ -160,20 +160,20 @@ export function WorkshopTimer() {
         {/* Header - Green/Brand Theme */}
         <div className="bg-cathay-green text-white p-6 flex items-center justify-between shadow-2xl relative z-10">
           <div className="flex items-center gap-6">
-            <div className="flex items-center gap-3 bg-white/10 p-2 rounded-2xl ring-1 ring-white/20">
-              <div className="flex items-center gap-1">
-                <img src="logo_cgh.png" alt="CGH" className="h-8 md:h-10 w-auto object-contain" onError={e => e.currentTarget.style.display='none'} />
-                <div className="bg-white/20 px-2 py-0.5 rounded text-[10px] font-black">CGH</div>
+            <div className="flex items-center gap-3 bg-white p-1.5 rounded-2xl shadow-sm ring-1 ring-black/5">
+              <div className="flex items-center gap-1.5">
+                <img src="logo_cgh.png" alt="CGH" className="h-8 md:h-9 w-auto object-contain" onError={e => e.currentTarget.style.display='none'} />
+                <div className="bg-cathay-green/10 text-cathay-green px-1.5 py-0.5 rounded text-[9px] font-black">CGH</div>
               </div>
-              <div className="w-px h-6 bg-white/20" />
-              <div className="flex items-center gap-1">
-                <img src="logo_tsem.png" alt="TSEM" className="h-8 md:h-10 w-auto object-contain" onError={e => e.currentTarget.style.display='none'} />
-                <div className="bg-slate-800/40 px-2 py-0.5 rounded text-[10px] font-black">TSEM</div>
+              <div className="w-px h-6 bg-slate-200" />
+              <div className="flex items-center gap-1.5">
+                <img src="logo_tsem.png" alt="TSEM" className="h-8 md:h-9 w-auto object-contain" onError={e => e.currentTarget.style.display='none'} />
+                <div className="bg-slate-100 text-slate-800 px-1.5 py-0.5 rounded text-[9px] font-black">TSEM</div>
               </div>
             </div>
             <div>
               <h1 className="text-3xl font-black tracking-tight flex items-center gap-3">
-                臨床教練工作坊
+                臨床教練工作坊 2.0
                 <span className="bg-amber-400 text-cathay-green text-[10px] px-2 py-0.5 rounded-full uppercase tracking-widest font-black ring-1 ring-white/50">Digital Timeline</span>
               </h1>
               <div className="flex items-center gap-4 text-white/70 text-[13px] font-bold mt-1">
