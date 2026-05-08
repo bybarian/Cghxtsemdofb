@@ -1,0 +1,56 @@
+{
+  "entities": {
+    "FeedbackResult": {
+      "title": "Feedback Assessment Result",
+      "description": "Stores the assessment result for a clinical coaching feedback session",
+      "type": "object",
+      "properties": {
+        "facilitator": { "type": "string", "description": "Name of the facilitator" },
+        "trainee": { "type": "string", "description": "Name of the trainee (standardized resident)" },
+        "scores": { 
+          "type": "object", 
+          "description": "Map of item IDs to scores (0, 1, 2)" 
+        },
+        "totalScore": { "type": "number" },
+        "maxScore": { "type": "number" },
+        "categoryScores": {
+          "type": "object",
+          "description": "Nested object with category names and their summarized scores"
+        },
+        "aiSuggestions": { "type": "string", "description": "AI generated feedback/suggestions" },
+        "evaluatorId": { "type": "string", "description": "UID of the user who performed the evaluation" },
+        "evaluatorEmail": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["facilitator", "trainee", "scores", "totalScore", "evaluatorId", "createdAt"]
+    },
+    "MilestoneResult": {
+      "title": "Milestone assessment result",
+      "description": "Stores the assessment result for a facilitator milestone level",
+      "type": "object",
+      "properties": {
+        "facilitator": { "type": "string" },
+        "trainee": { "type": "string" },
+        "selectedLevels": { "type": "object" },
+        "totalScore": { "type": "number" },
+        "maxScore": { "type": "number", "enum": [20] },
+        "aiAnalysis": { "type": "object" },
+        "aiSuggestions": { "type": "string" },
+        "evaluatorId": { "type": "string" },
+        "evaluatorEmail": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["facilitator", "trainee", "selectedLevels", "totalScore", "evaluatorId", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/feedbackResults": {
+      "schema": "FeedbackResult",
+      "description": "Collection of feedback assessment results"
+    },
+    "/milestoneResults": {
+      "schema": "MilestoneResult",
+      "description": "Collection of facilitator milestone assessment results"
+    }
+  }
+}

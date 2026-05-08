@@ -5,14 +5,15 @@ export const WORKSHOP_SCHEDULE: ScheduleItem[] = [
   { time: "13:05-13:35", minutes: 30, topic: "Clinical Coach 在能力導向教育的角色", location: "國泰人壽大樓 33 會議室", speaker: "楊志偉教授" },
   { time: "13:35-14:05", minutes: 30, topic: "回饋技巧理論架構介紹 (ERCP)", location: "國泰人壽大樓 33 會議室", speaker: "劉政亨醫師" },
   { time: "14:05-14:20", minutes: 15, topic: "回饋技巧實務探討", location: "國泰人壽大樓 33 會議室", speaker: "鍾睿元副主任 / 郭宇正主任" },
-  { time: "14:20-14:55", minutes: 35, topic: "回饋演練 Session 1 (Round 1)", location: "國泰人壽大樓 33 會議室" },
-  { time: "14:55-15:00", minutes: 5, topic: "換場休息", location: "國泰人壽大樓 33 會議室", isBreak: true },
-  { time: "15:00-15:25", minutes: 25, topic: "回饋演練 Session 1 (Round 2)", location: "國泰人壽大樓 33 會議室" },
-  { time: "15:25-15:45", minutes: 20, topic: "咖啡茶敘", location: "國泰人壽大樓 33 會議室", isBreak: true },
-  { time: "15:45-16:20", minutes: 35, topic: "回饋演練 Session 2 (Round 1)", location: "國泰人壽大樓 33 會議室" },
-  { time: "16:20-16:25", minutes: 5, topic: "換場休息", location: "國泰人壽大樓 33 會議室", isBreak: true },
-  { time: "16:25-16:50", minutes: 25, topic: "回饋演練 Session 2 (Round 2)", location: "國泰人壽大樓 33 會議室" },
-  { time: "16:50-17:10", minutes: 20, topic: "總結 (Closing Remarks)", location: "國泰人壽大樓 33 會議室" }
+  { time: "14:20-14:40", minutes: 20, topic: "換場及移動 / 休息", location: "國泰人壽大樓 33 會議室", isBreak: true },
+  { time: "14:40-15:15", minutes: 35, topic: "回饋演練 Session 1 (Round 1)", location: "國泰人壽大樓 33 會議室" },
+  { time: "15:15-15:20", minutes: 5, topic: "換場休息", location: "國泰人壽大樓 33 會議室", isBreak: true },
+  { time: "15:20-15:45", minutes: 25, topic: "回饋演練 Session 1 (Round 2)", location: "國泰人壽大樓 33 會議室" },
+  { time: "15:45-16:05", minutes: 20, topic: "咖啡茶敘", location: "國泰人壽大樓 33 會議室", isBreak: true },
+  { time: "16:05-16:40", minutes: 35, topic: "回饋演練 Session 2 (Round 1)", location: "國泰人壽大樓 33 會議室" },
+  { time: "16:40-16:45", minutes: 5, topic: "換場休息", location: "國泰人壽大樓 33 會議室", isBreak: true },
+  { time: "16:45-17:10", minutes: 25, topic: "回饋演練 Session 2 (Round 2)", location: "國泰人壽大樓 33 會議室" },
+  { time: "17:10-17:30", minutes: 20, topic: "總結 (Closing Remarks)", location: "國泰人壽大樓 33 會議室" }
 ];
 
 export const SCENARIOS: Scenario[] = [
@@ -20,7 +21,7 @@ export const SCENARIOS: Scenario[] = [
     id: 1,
     title: "案例一：表面認同型 (Yes-Man)",
     iconName: "CheckCircle2",
-    timeRange: "14:20~14:55",
+    timeRange: "14:40~15:15",
     personality: 'agreeable_vague',
     description: "不斷點頭認同，但教練無法得知你的真實想法或具體學習痛點。",
     roleBehavior: "當教練問你『覺不覺得剛才哪裡可以更好？』時，你總是回答『老師說得對，我都覺得很好，我會改進』。你的目標是讓教練練習如何『深挖』學員的內心想法。",
@@ -34,7 +35,7 @@ export const SCENARIOS: Scenario[] = [
     id: 2,
     title: "案例二：完美主義型 (Perfectionist)",
     iconName: "Target",
-    timeRange: "15:00~15:25",
+    timeRange: "15:20~15:45",
     personality: 'perfectionist',
     description: "對自己要求極高，教練給予正面肯定時反而讓你感到挫折或不自在。",
     roleBehavior: "即便教練稱稱讚你，你也要強調自己做得不好的地方。例如：『老師，我覺得我剛才那個解釋太爛了，病人一定覺得我不專業。』測試教練如何處理這種『自我價值感低落』的學員。",
@@ -48,7 +49,7 @@ export const SCENARIOS: Scenario[] = [
     id: 3,
     title: "案例三：抗拒/焦慮型 (Resistant)",
     iconName: "AlertTriangle",
-    timeRange: "15:45~16:20",
+    timeRange: "16:05~16:40",
     personality: 'resistant_anxious',
     description: "表現出非常焦慮或是有急事想離開，對回饋內容表現出防禦性。",
     roleBehavior: "頻繁看手錶，表現出心思不在這裡。當教練點出問題時，嘗試用外部原因開脫，如：『因為那天急診室真的很忙...』測試教練如何建立關係並穩定你的情緒。",
@@ -62,7 +63,7 @@ export const SCENARIOS: Scenario[] = [
 
 export const ROTATION_DATA: RotationSession[] = [
   {
-    timeRange: "14:20-15:25 (Session 1)",
+    timeRange: "14:40-15:45 (Session 1)",
     assignments: [
       { room: "診間一", scenarioType: "病史詢問", facilitator: "陳信佑", sr: "王昱仁", group: "A" },
       { room: "診間二", scenarioType: "病情解釋", facilitator: "郭宇正", sr: "闕嘉儀", group: "B" },
@@ -73,7 +74,7 @@ export const ROTATION_DATA: RotationSession[] = [
     ]
   },
   {
-    timeRange: "15:45-16:50 (Session 2)",
+    timeRange: "16:05-17:10 (Session 2)",
     assignments: [
       { room: "診間一", scenarioType: "病情解釋", facilitator: "郭宇正", sr: "闕嘉儀", group: "A" },
       { room: "診間二", scenarioType: "病史詢問", facilitator: "陳信佑", sr: "王昱仁", group: "B" },

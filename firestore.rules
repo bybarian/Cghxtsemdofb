@@ -1,0 +1,84 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Phase 3: Primitive Definitions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && 
+        (request.auth.token.email.lower() == "bybarian@gmail.com" || 
+         request.auth.token.email == "bybarian@gmail.com");
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128; // Relaxing regex for now
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Pillar 2: Validation Blueprints
+    function isValidFeedbackResult(data) {
+      return data.keys().hasAll(['facilitator', 'trainee', 'scores', 'totalScore', 'maxScore', 'categoryScores', 'aiSuggestions', 'evaluatorId', 'evaluatorEmail', 'createdAt'])
+        && data.keys().size() == 10
+        && data.facilitator is string && data.facilitator.size() <= 200
+        && data.trainee is string && data.trainee.size() <= 200
+        && data.totalScore is number && data.totalScore >= 0
+        && data.maxScore is number && data.maxScore > 0
+        && data.scores is map
+        && data.categoryScores is map
+        && data.aiSuggestions is string && data.aiSuggestions.size() <= 10000
+        && data.evaluatorId == request.auth.uid
+        && data.evaluatorEmail is string
+        && data.createdAt == request.time; // Pillar 10: Temporal Integrity
+    }
+
+    function isValidMilestoneResult(data) {
+      return data.keys().hasAll(['facilitator', 'trainee', 'selectedLevels', 'totalScore', 'maxScore', 'aiAnalysis', 'aiSuggestions', 'evaluatorId', 'evaluatorEmail', 'createdAt'])
+        && data.keys().size() == 10
+        && data.facilitator is string && data.facilitator.size() <= 200
+        && data.trainee is string && data.trainee.size() <= 200
+        && data.selectedLevels is map
+        && data.totalScore is number && data.totalScore >= 0
+        && data.maxScore is number && data.maxScore == 20
+        && (data.aiAnalysis == null || data.aiAnalysis is map)
+        && (data.aiSuggestions == null || (data.aiSuggestions is string && data.aiSuggestions.size() <= 10000))
+        && data.evaluatorId == request.auth.uid
+        && data.evaluatorEmail is string
+        && data.createdAt == request.time;
+    }
+
+    // Pillar 1: The Master Gate
+    match /feedbackResults/{resultId} {
+      // Pillar 3: Path Variable Hardening
+      allow create: if isSignedIn() && isValidId(resultId) && isValidFeedbackResult(incoming());
+      
+      // Pillar 8: Secure List Queries
+      allow list: if isAdmin() || (isSignedIn() && (resource.data.get('evaluatorId', '') == request.auth.uid || resource.data.get('evaluatorEmail', '') == request.auth.token.email));
+      allow get: if isAdmin() || (isSignedIn() && (resource.data.get('evaluatorId', '') == request.auth.uid || resource.data.get('evaluatorEmail', '') == request.auth.token.email));
+      
+      allow update: if false;
+      allow delete: if isAdmin() || (isSignedIn() && (resource.data.get('evaluatorId', '') == request.auth.uid || resource.data.get('evaluatorEmail', '') == request.auth.token.email));
+    }
+
+    match /milestoneResults/{resultId} {
+      allow create: if isSignedIn() && isValidId(resultId) && isValidMilestoneResult(incoming());
+      allow list: if isAdmin() || (isSignedIn() && (resource.data.get('evaluatorId', '') == request.auth.uid || resource.data.get('evaluatorEmail', '') == request.auth.token.email));
+      allow get: if isAdmin() || (isSignedIn() && (resource.data.get('evaluatorId', '') == request.auth.uid || resource.data.get('evaluatorEmail', '') == request.auth.token.email));
+      allow update: if false;
+      allow delete: if isAdmin() || (isSignedIn() && (resource.data.get('evaluatorId', '') == request.auth.uid || resource.data.get('evaluatorEmail', '') == request.auth.token.email));
+    }
+  }
+}

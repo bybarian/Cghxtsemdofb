@@ -21,7 +21,7 @@ interface Stage {
 }
 
 const WORKSHOP_STAGES: Stage[] = [
-  // Session 1 Round 1 (14:20-14:55)
+  // Session 1 Round 1 (14:40-15:15)
   { id: 's1r1pdt', label: "S1-R1：PDT 複習", duration: 7, type: 'workshop', voice: "回饋演練開始，請進行 PDT 複習。" },
   { id: 's1r1vid', label: "S1-R1：播放影片", duration: 5, type: 'workshop', voice: "現在開始播放演練影片。" },
   { id: 's1r1prep', label: "S1-R1：回饋準備", duration: 8, type: 'workshop', voice: "影片結束，請引導學員進行回饋準備與討論。" },
@@ -30,7 +30,7 @@ const WORKSHOP_STAGES: Stage[] = [
   
   { id: 'break1', label: "換場休息", duration: 5, type: 'break', voice: "現在是換場休息時間。" },
   
-  // Session 1 Round 2 (15:00-15:25)
+  // Session 1 Round 2 (15:20-15:45)
   { id: 's1r2vid', label: "S1-R2：播放影片", duration: 5, type: 'workshop', voice: "第二輪播放影片開始。" },
   { id: 's1r2prep', label: "S1-R2：回饋準備", duration: 6, type: 'workshop', voice: "請開始回饋準備討論。" },
   { id: 's1r2exec', label: "S1-R2：進行回饋", duration: 7, type: 'workshop', voice: "標準住院醫師進入診間，進行第二輪回饋。" },
@@ -38,7 +38,7 @@ const WORKSHOP_STAGES: Stage[] = [
   
   { id: 'coffee', label: "咖啡茶敘", duration: 20, type: 'break', voice: "現在是咖啡茶敘時間，二十分鐘後開始 Session 2。" },
   
-  // Session 2 Round 1 (15:45-16:20)
+  // Session 2 Round 1 (16:05-16:40)
   { id: 's2r1pdt', label: "S2-R1：PDT 複習", duration: 7, type: 'workshop', voice: "Session 2 開始，請進行 PDT 複習。" },
   { id: 's2r1vid', label: "S2-R1：播放影片", duration: 5, type: 'workshop', voice: "播放演練影片。" },
   { id: 's2r1prep', label: "S2-R1：回饋準備", duration: 8, type: 'workshop', voice: "請引導回饋準備。" },
@@ -47,7 +47,7 @@ const WORKSHOP_STAGES: Stage[] = [
   
   { id: 'break2', label: "換場休息", duration: 5, type: 'break', voice: "換場休息。" },
   
-  // Session 2 Round 2 (16:25-16:50)
+  // Session 2 Round 2 (16:45-17:10)
   { id: 's2r2vid', label: "S2-R2：播放影片", duration: 5, type: 'workshop', voice: "最後一輪播放影片。" },
   { id: 's2r2prep', label: "S2-R2：回饋準備", duration: 6, type: 'workshop', voice: "回饋準備。" },
   { id: 's2r2exec', label: "S2-R2：進行回饋", duration: 7, type: 'workshop', voice: "進行回饋。" },
@@ -64,7 +64,7 @@ export function WorkshopTimer() {
   const [startTime, setStartTime] = useState<number | null>(null);
   const [now, setNow] = useState(Date.now());
   const [showError, setShowError] = useState(false);
-  const [customStartTime, setCustomStartTime] = useState("14:20");
+  const [customStartTime, setCustomStartTime] = useState("14:40");
   
   const lastAnnouncedIdRef = useRef<string | null>(null);
 
