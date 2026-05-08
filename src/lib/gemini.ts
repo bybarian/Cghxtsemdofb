@@ -4,15 +4,35 @@ let aiInstance: GoogleGenAI | null = null;
 
 function getAi() {
   if (!aiInstance) {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      console.warn("GEMINI_API_KEY is not set. AI features might not work.");
-      // We don't throw heroically here to avoid crashing the whole app, 
-      // but the actual call will fail later.
+    let apiKey = process.env.GEMINI_API_KEY;
+    
+    // Fallback for GitHub Pages / Manual override
+    if (!apiKey || apiKey === "MY_GEMINI_API_KEY" || apiKey === "undefined") {
+      const manualKey = localStorage.getItem('GEMINI_API_KEY_OVERRIDE');
+      if (manualKey) {
+        apiKey = manualKey;
+      }
     }
+
+    if (!apiKey || apiKey === "MY_GEMINI_API_KEY" || apiKey === "undefined") {
+      console.warn("GEMINI_API_KEY is not set. AI features will require manual configuration or environment setup.");
+    }
+    
     aiInstance = new GoogleGenAI({ apiKey: apiKey || "" });
   }
   return aiInstance;
+}
+
+export function setGeminiApiKeyOverride(key: string) {
+  localStorage.setItem('GEMINI_API_KEY_OVERRIDE', key);
+  aiInstance = null; // Reset instance to pick up new key
+}
+
+export function hasGeminiApiKey() {
+  const envKey = process.env.GEMINI_API_KEY;
+  const manualKey = localStorage.getItem('GEMINI_API_KEY_OVERRIDE');
+  const isValid = (k: any) => k && k !== "MY_GEMINI_API_KEY" && k !== "undefined" && k.length > 10;
+  return isValid(envKey) || isValid(manualKey);
 }
 
 export async function generateAiSuggestions(scores: Record<string, number>, trainee: string) {
@@ -48,6 +68,7 @@ export async function generateAiSuggestions(scores: Record<string, number>, trai
 }
 
 export async function analyzeMilestoneTranscript(transcript: string, criteria: any[]) {
+  console.log("Starting Milestone AI Analysis...");
   const prompt = `
     請依據以下引導師的回饋教學逐字稿，執行以下任務：
     1. 評估其在四個 Milestone 範疇的等級（Level 1-5）。
@@ -89,6 +110,7 @@ export async function analyzeMilestoneTranscript(transcript: string, criteria: a
 }
 
 export async function analyzeFeedbackTranscript(transcript: string, evalData: any[]) {
+  console.log("Starting Feedback AI Analysis...");
   const prompt = `
     請根據以下臨床引導師的回饋教學逐字稿，執行以下兩項任務：
     1. 針對回饋評核表的項目進行評分 (0-2分)。

@@ -3,7 +3,7 @@ import { auth, db } from './lib/firebase';
 import { signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, User } from 'firebase/auth';
 import { collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, deleteDoc, doc } from 'firebase/firestore';
 import * as XLSX from 'xlsx';
-import { generateAiSuggestions, analyzeMilestoneTranscript, analyzeFeedbackTranscript } from './lib/gemini';
+import { generateAiSuggestions, analyzeMilestoneTranscript, analyzeFeedbackTranscript, hasGeminiApiKey, setGeminiApiKeyOverride } from './lib/gemini';
 import { 
   PieChart, Pie, Cell, 
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
@@ -218,6 +218,63 @@ const MILESTONE_CRITERIA = [
   }
 ];
 
+function AiKeySetupIndicator() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [apiKey, setApiKey] = useState('');
+  const [hasKey, setHasKey] = useState(hasGeminiApiKey());
+
+  if (hasKey && !isOpen) return null;
+
+  return (
+    <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 mb-6 animate-in fade-in slide-in-from-top-2 relative z-10">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2 text-amber-800 font-black text-[10px] uppercase tracking-wider">
+          <AlertTriangle size={14} className="text-amber-500" />
+          <span>{hasKey ? "AI API 已設定 (可更新)" : "AI 功能尚未就緒 (需設定 API Key)"}</span>
+        </div>
+        <button 
+          onClick={() => setIsOpen(!isOpen)}
+          className="text-[10px] font-black text-amber-600 hover:text-amber-700 underline flex items-center gap-1"
+        >
+          <Settings size={12} />
+          {isOpen ? "關閉設定板" : "手動設定 API Key (供 GitHub 使用)"}
+        </button>
+      </div>
+      {isOpen && (
+        <div className="space-y-3 mt-4 pt-4 border-t border-amber-200/50">
+          <p className="text-[10px] text-amber-700 font-bold leading-relaxed">
+            在 GitHub Pages 運行時，AI 功能需要 API Key。您可以前往 <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="underline font-black">Google AI Studio</a> 獲取免費的 Key。
+            <br />設定後將儲存於您的瀏覽器快取，無需重新編譯。
+          </p>
+          <div className="flex gap-2">
+            <input 
+              type="password"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              placeholder="在此貼上您的 Gemini API Key (AI Studio 提供)..."
+              className="flex-1 bg-white border border-amber-200 rounded-lg px-3 py-2 text-[10px] font-mono outline-none focus:ring-2 focus:ring-amber-500/20 shadow-inner"
+            />
+            <button 
+              onClick={() => {
+                if (apiKey.length < 10) return alert('Key 格式不正確，請重新檢查');
+                setGeminiApiKeyOverride(apiKey);
+                setHasKey(true);
+                setIsOpen(false);
+                // We don't necessarily need a hard reload if we export a reset method, 
+                // but for simplicity, let's just alert.
+                alert('API Key 已儲存，請重新執行 AI 分析。');
+              }}
+              className="bg-amber-600 text-white px-4 py-2 rounded-lg text-[10px] font-black shadow-md hover:bg-amber-700 transition-all active:scale-95"
+            >
+              確認設定
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function MilestoneAssessment({ user }: { user: any }) {
   const [facilitator, setFacilitator] = useState('');
   const [trainee, setTrainee] = useState('');
@@ -384,6 +441,7 @@ function MilestoneAssessment({ user }: { user: any }) {
 
       {/* AI Analysis Integration */}
       <div className="p-6 bg-cathay-light/5 border-b border-cathay-light/20 space-y-4">
+        <AiKeySetupIndicator />
         <div className="flex items-start gap-4">
           <div className="bg-cathay-green text-white p-2.5 rounded-xl shadow-lg shadow-cathay-green/20">
             <Mic2 size={20} />
@@ -988,6 +1046,7 @@ function FeedbackScoringTable() {
 
       {/* AI Analysis Integration for Feedback */}
       <div className="p-6 bg-cathay-light/5 border-b border-cathay-light/20 space-y-4">
+        <AiKeySetupIndicator />
         <div className="flex items-start gap-4">
           <div className="bg-cathay-green text-white p-2.5 rounded-xl shadow-lg shadow-cathay-green/20">
             <Mic2 size={20} />
