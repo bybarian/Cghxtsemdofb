@@ -946,6 +946,7 @@ function FeedbackScoringTable() {
         totalScore: total,
         maxScore: max,
         categoryScores,
+        aiScores,
         aiSuggestions: aiResult,
         evaluatorId: user.uid,
         evaluatorEmail: user.email,
@@ -1624,7 +1625,7 @@ function AssessmentDashboard({ initialTab }: { initialTab?: 'feedback' | 'milest
                 <thead>
                    <tr className="bg-slate-50/50 text-[10px] font-black text-slate-400 uppercase tracking-widest">
                       <th className="px-6 py-4">Trainee / Facilitator</th>
-                      <th className="px-6 py-4">Total Score</th>
+                      <th className="px-6 py-4">Manual vs AI Score</th>
                       <th className="px-6 py-4">Completion</th>
                       <th className="px-6 py-4">Date</th>
                       <th className="px-6 py-4 text-center">Action</th>
