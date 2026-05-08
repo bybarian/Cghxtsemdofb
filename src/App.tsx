@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { auth, db } from './lib/firebase';
-import { GoogleGenAI } from '@google/genai';
 import { signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, User } from 'firebase/auth';
 import { collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, deleteDoc, doc } from 'firebase/firestore';
 import * as XLSX from 'xlsx';
-import { generateAiSuggestions } from './lib/gemini';
+import { generateAiSuggestions, analyzeMilestoneTranscript, analyzeFeedbackTranscript } from './lib/gemini';
 import { 
   PieChart, Pie, Cell, 
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
@@ -248,43 +247,12 @@ function MilestoneAssessment({ user }: { user: any }) {
     if (!transcript) return alert('請先輸入逐字稿內容');
     setAiLoading(true);
     try {
-      const prompt = `
-        請依據以下引導師的回饋教學逐字稿，執行以下兩項任務：
-        1. 評估其在四個 Milestone 範疇的等級（Level 1-5）。
-        2. 針對每個範疇提供具體的改進建議（如何達到更高一級的表現）。
-        
-        Milestone 範疇與基準：
-        ${MILESTONE_CRITERIA.map((c, i) => `${i+1}. ${c.category}:
-        ${c.levels.map((l, li) => `   Level ${li+1}: ${l}`).join('\n')}`).join('\n')}
-
-        逐字稿內容：
-        ${transcript}
-
-        請輸出 JSON 格式的結果，格式必須嚴格如下：
-        {
-          "levels": {
-            "0": 1-5,
-            "1": 1-5,
-            "2": 1-5,
-            "3": 1-5
-          },
-          "suggestions": "【關鍵觀察】: ... \n\n【晉級指引】: ...",
-          "reasoning": "簡短的評估理由"
-        }
-      `;
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
-      const result = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: prompt
-      });
-      const text = result.text || '';
-      const jsonStr = text.match(/\{[\s\S]*\}/)?.[0] || '{}';
-      const analysis = JSON.parse(jsonStr);
+      const analysis = await analyzeMilestoneTranscript(transcript, MILESTONE_CRITERIA);
       
       const levels: Record<number, number> = {};
       [0, 1, 2, 3].forEach(idx => {
         if (analysis.levels && analysis.levels[idx]) {
-          levels[idx] = analysis.levels[idx] - 1; // Convert to 0-indexed
+          levels[idx] = Number(analysis.levels[idx]) - 1; // Convert to 0-indexed
         }
       });
       setAiAnalysis(levels);
@@ -879,41 +847,7 @@ function FeedbackScoringTable() {
     if (!transcript) return alert('請先輸入逐字稿內容');
     setAiAnalysisLoading(true);
     try {
-      const prompt = `
-        請根據以下臨床引導師的回饋教學逐字稿，執行以下兩項任務：
-        1. 針對回饋評核表的 22 個項目進行評分 (0-2分)。
-        2. 針對整體回饋表現提供具體的改良建議 (AI 智慧教學建議)。
-        
-        評分標準：
-        2 分：完全達成 (Excellent)
-        1 分：部分達成 (Satisfactory)
-        0 分：未達成 (Needs Improvement)
-
-        評核項目清單：
-        ${FEEDBACK_EVAL_DATA.flatMap(cat => cat.items.map(item => `- ${item.id}: ${item.label} (${item.behavior})`)).join('\n')}
-
-        逐字稿內容：
-        ${transcript}
-
-        請僅輸出 JSON 格式的結果，格式必須嚴格如下：
-        {
-          "scores": {
-            "pre1": 0-2,
-            "pre2": 0-2,
-            ... 所有 22 個項目
-          },
-          "suggestions": "針對整體回饋技巧的具體改良建議",
-          "reasoning": "簡短的評估理由"
-        }
-      `;
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
-      const result = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: prompt
-      });
-      const text = result.text || '';
-      const jsonStr = text.match(/\{[\s\S]*\}/)?.[0] || '{}';
-      const analysis = JSON.parse(jsonStr);
+      const analysis = await analyzeFeedbackTranscript(transcript, FEEDBACK_EVAL_DATA);
       
       if (analysis.scores) {
         setAiScores(analysis.scores);
