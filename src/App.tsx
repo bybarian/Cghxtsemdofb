@@ -2352,7 +2352,7 @@ function MainAppContent() {
                     <div className="max-w-5xl mx-auto">
                       <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg bg-white group">
                         <img 
-                          src="/ercp-adapt-mapping.png" 
+                          src="ercp-adapt-mapping.png" 
                           alt="ERCP x ADAPT Mapping Diagram" 
                           className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-[1.02]"
                           onError={(e) => {
