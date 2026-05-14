@@ -1,4 +1,4 @@
-import { Scenario, ScheduleItem, RotationSession } from './types';
+import { Scenario, ScheduleItem, RotationSession, GroupMember } from './types';
 
 export const WORKSHOP_SCHEDULE: ScheduleItem[] = [
   { time: "13:00-13:05", minutes: 5, topic: "長官與貴賓致詞", location: "國泰人壽大樓 33 會議室", speaker: "簡志誠院長" },
@@ -84,6 +84,39 @@ export const ROTATION_DATA: RotationSession[] = [
       { room: "診間二", scenarioType: "病史詢問", facilitator: "鍾睿元", sr: "李佩庭", group: "F" },
     ]
   }
+];
+
+export const GROUP_MEMBERS: GroupMember[] = [
+  // Group A
+  { group: "A", name: "蘇元亨", hospital: "部立桃園醫院" },
+  { group: "A", name: "蔡子平", hospital: "台北榮總" },
+  { group: "A", name: "王芃惟", hospital: "國立臺灣大學醫學院附設醫院雲林分院" },
+  { group: "A", name: "席國陽", hospital: "秀傳醫療社團法人秀傳紀念醫院" },
+  // Group B
+  { group: "B", name: "劉書君", hospital: "長庚醫院" },
+  { group: "B", name: "楊鎧蔚", hospital: "中國醫藥大學附設醫院" },
+  { group: "B", name: "張昱", hospital: "國泰綜合醫院" },
+  { group: "B", name: "廖柏翔", hospital: "臺北榮民總醫院" },
+  // Group C
+  { group: "C", name: "葉俊廷", hospital: "雙和醫院" },
+  { group: "C", name: "陳宜君", hospital: "臺大醫院雲林分院" },
+  { group: "C", name: "莊凱喬", hospital: "汐止國泰醫院" },
+  { group: "C", name: "陳佳儀", hospital: "高雄榮民總醫院" },
+  // Group D
+  { group: "D", name: "蔡賢龍", hospital: "振興醫院" },
+  { group: "D", name: "曾嘉營", hospital: "台中榮總" },
+  { group: "D", name: "許瑞峰", hospital: "醫療財團法人羅許基金會羅東博愛醫院" },
+  { group: "D", name: "林昱均", hospital: "中國醫藥大學附設醫院" },
+  // Group E
+  { group: "E", name: "吳妍萱", hospital: "國泰醫療財團法人國泰綜合醫院" },
+  { group: "E", name: "張家瑜", hospital: "台北榮民總醫院急診部" },
+  { group: "E", name: "許雅棠", hospital: "中國醫藥大學附設醫院" },
+  { group: "E", name: "黃晨祐", hospital: "國泰綜合醫院心血管中心 主治醫師 (觀摩)" },
+  // Group F
+  { group: "F", name: "黃詠淮", hospital: "臺北榮民總醫院" },
+  { group: "F", name: "徐展鵬", hospital: "新竹國泰綜合醫院" },
+  { group: "F", name: "林映辰", hospital: "中國醫藥大學附設醫院" },
+  { group: "F", name: "林慶齡", hospital: "汐止國泰綜合醫院 院長 (觀摩)" },
 ];
 
 export const FACILITATOR_GUIDE = [

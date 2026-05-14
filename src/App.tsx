@@ -60,7 +60,7 @@ import {
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { WORKSHOP_SCHEDULE, SCENARIOS, ROTATION_DATA, FACILITATOR_GUIDE, SR_PROGRESSION } from './constants';
+import { WORKSHOP_SCHEDULE, SCENARIOS, ROTATION_DATA, FACILITATOR_GUIDE, SR_PROGRESSION, GROUP_MEMBERS } from './constants';
 import { Scenario } from './types';
 import { WorkshopTimer } from './components/WorkshopTimer';
 
@@ -2143,6 +2143,57 @@ function MainAppContent() {
                     </div>
                   </div>
                 ))}
+
+                {/* Group Members List */}
+                <div className="space-y-4 mt-12 animate-in fade-in slide-in-from-bottom-5 duration-700">
+                  <div className="flex items-center gap-2 px-1">
+                    <div className="w-1.5 h-5 bg-cathay-green rounded-full shadow-sm shadow-cathay-green/20" />
+                    <h3 className="font-bold text-slate-800 text-lg">學員分組名單 (Group Members List)</h3>
+                  </div>
+                  <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm overflow-x-auto">
+                    <table className="w-full text-sm text-left border-collapse">
+                      <thead className="bg-slate-50 font-black uppercase tracking-widest border-b border-slate-200">
+                        <tr>
+                          <th className="px-6 py-4 whitespace-nowrap text-[14px] text-slate-600 border-r border-slate-100 w-16">組別</th>
+                          <th className="px-6 py-4 whitespace-nowrap text-[14px] text-slate-600 border-r border-slate-100">姓名</th>
+                          <th className="px-6 py-4 whitespace-nowrap text-[14px] text-slate-600">服務單位</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100">
+                        {GROUP_MEMBERS.map((member, idx) => {
+                          const bgColors: Record<string, string> = {
+                            'A': 'bg-green-50/70',
+                            'B': 'bg-blue-50/70',
+                            'C': 'bg-yellow-50/70',
+                            'D': 'bg-red-50/70',
+                            'E': 'bg-emerald-50/70',
+                            'F': 'bg-sky-50/70'
+                          };
+                          
+                          // Only show the group letter for the first member of each group
+                          const showGroup = idx === 0 || GROUP_MEMBERS[idx - 1].group !== member.group;
+                          
+                          return (
+                            <tr key={idx} className={cn(
+                              "transition-colors",
+                              bgColors[member.group] || "bg-white"
+                            )}>
+                              <td className="px-6 py-4 text-center font-black text-slate-900 border-r border-white/40">
+                                {showGroup ? member.group : ""}
+                              </td>
+                              <td className="px-6 py-4 text-slate-800 font-bold whitespace-nowrap border-r border-white/40">
+                                {member.name}
+                              </td>
+                              <td className="px-6 py-4 text-slate-600 font-medium">
+                                {member.hospital}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </motion.div>
             )}
 

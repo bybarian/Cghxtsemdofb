@@ -44,3 +44,9 @@ export interface RotationSession {
   timeRange: string;
   assignments: Assignment[];
 }
+
+export interface GroupMember {
+  group: string;
+  name: string;
+  hospital: string;
+}
